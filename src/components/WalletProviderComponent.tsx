@@ -3,15 +3,13 @@ import { ConnectionProvider, useWallet, WalletProvider } from '@solana/wallet-ad
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import {
     WalletModalProvider,
-    WalletDisconnectButton,
     WalletMultiButton
 } from '@solana/wallet-adapter-react-ui';
 import { clusterApiUrl, Connection, Transaction, SystemProgram, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import {
     PhantomWalletAdapter,
     SolflareWalletAdapter,
-    TorusWalletAdapter,
-    UnsafeBurnerWalletAdapter
+    TorusWalletAdapter
 } from '@solana/wallet-adapter-wallets';
 import toast from 'react-hot-toast';
 
@@ -108,34 +106,6 @@ const SendButton = ({ updateButtonState, priceInSOL }) => {
     );
 };
 
-const BalanceButton = () => {
-    const { publicKey } = useWallet();
-    const [balance, setBalance] = useState(null);
-
-    const getBalance = async () => {
-        console.log('Public Key:', publicKey?.toString());
-        if (!publicKey) {
-            toast.error('Wallet not connected');
-            return;
-        }
-
-        try {
-            const connection = new Connection("https://icy-maximum-butterfly.solana-mainnet.quiknode.pro/8e282c712eb5c7cccf40ac03084d85293d323f3d/", 'confirmed');
-            const balance = await connection.getBalance(publicKey);
-            setBalance(balance / LAMPORTS_PER_SOL); // Convert lamports to SOL
-            toast.success(`Your balance is: ${balance / LAMPORTS_PER_SOL} SOL`);
-        } catch (error) {
-            console.log(`error: ${error}`);
-            toast.error('Failed to fetch balance');
-        }
-    };
-
-    return (
-        <button onClick={getBalance} style={{ marginLeft: '10px' }}>
-            Show Balance
-        </button>
-    );
-};
 
 export const WalletProviderComponent = ({ updateButtonState, priceInSOL }) => {
     const network = WalletAdapterNetwork.Mainnet;
