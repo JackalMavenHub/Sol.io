@@ -115,9 +115,9 @@ function App() {
             animationData={blockchainAnimation}
             loop={true}
             autoplay={true}
-            style={{ width: '250px', height: '250px', filter: 'drop-shadow(0 0 20px rgba(0, 255, 255, 0.5))' }}
+            style={{ width: '150px', height: '150px' }}
           />
-          <h1 className="glitch-text">INITIALIZING...</h1>
+          <h1 className="intro-text">Initializing</h1>
         </div>
       </div>
     );
