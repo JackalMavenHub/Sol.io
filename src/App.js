@@ -7,12 +7,21 @@ import blockchainAnimation from './animations/blockchain.json';
 import { Toaster, toast } from 'react-hot-toast';
 
 function App() {
+  const [showIntro, setShowIntro] = useState(true);
   const [email, setEmail] = useState('');
   const [telegramName, setTelegramName] = useState('');
   const [subscription, setSubscription] = useState('');
   const [errors, setErrors] = useState({});
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [transactionCompleted, setTransactionCompleted] = useState(false);
+
+  // Intro Timer
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowIntro(false);
+    }, 3500); // 3.5 seconds
+    return () => clearTimeout(timer);
+  }, []);
 
   // Validate form and button state
   useEffect(() => {
@@ -98,8 +107,24 @@ function App() {
     setTransactionCompleted(completed);
   };
 
+  if (showIntro) {
+    return (
+      <div className="App intro-screen">
+        <div className="intro-content">
+          <Lottie
+            animationData={blockchainAnimation}
+            loop={true}
+            autoplay={true}
+            style={{ width: '250px', height: '250px', filter: 'drop-shadow(0 0 20px rgba(0, 255, 255, 0.5))' }}
+          />
+          <h1 className="glitch-text">INITIALIZING...</h1>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="App">
+    <div className="App fade-in-app">
       <Toaster position="top-center" />
       <header className="App-header fade-in">
         <div className="logo-container">
