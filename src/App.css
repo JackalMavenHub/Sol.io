@@ -23,13 +23,13 @@
 /* Main Container - Frosted Glass */
 .App-header {
   background: rgba(255, 255, 255, 0.65);
-  padding: 3rem;
+  padding: 2.5rem 2.5rem 3rem 2.5rem;
   width: 100%;
   max-width: 480px;
   position: relative;
   z-index: 1;
   border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 28px;
+  border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
@@ -40,26 +40,26 @@
 
 /* Logo */
 .logo-container {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 12px;
 }
 
 .lottie-container {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
 }
 
 .logo {
-  width: 90px;
+  width: 80px;
 }
 
 /* Typography */
 h1 {
   font-size: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   font-weight: 600;
   color: #1d1d1f;
   text-align: center;
@@ -67,7 +67,7 @@ h1 {
 }
 
 .description-container {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   text-align: center;
 }
 
@@ -75,7 +75,7 @@ h1 {
   margin: 0;
   font-size: 0.95rem;
   color: #86868b;
-  line-height: 1.5;
+  line-height: 1.6;
   font-weight: 400;
 }
 
@@ -83,21 +83,21 @@ h1 {
 .signup-form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 20px;
   width: 100%;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
 label {
   font-size: 0.85rem;
   font-weight: 500;
   color: #86868b;
-  padding-left: 0.5rem;
+  padding-left: 4px;
 }
 
 /* Flat iOS Inputs */
@@ -106,7 +106,7 @@ input, select {
   padding: 1rem 1.25rem;
   background: rgba(0, 0, 0, 0.04);
   border: 1px solid transparent;
-  border-radius: 14px;
+  border-radius: 10px;
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
   color: #1d1d1f;
@@ -151,9 +151,9 @@ option {
 .wallet-button-container {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 16px;
   width: 100%;
-  margin: 1rem 0;
+  margin: 16px 0 8px 0;
 }
 
 /* Buttons */
@@ -162,7 +162,7 @@ option {
 .submit-button {
   width: 100%;
   height: 50px;
-  border-radius: 14px;
+  border-radius: 10px;
   font-family: 'Inter', sans-serif;
   font-weight: 600;
   font-size: 1rem;
@@ -202,7 +202,6 @@ option {
 .submit-button {
   background: #000000;
   color: #ffffff;
-  margin-top: 0.5rem;
 }
 
 .submit-button:hover:not(:disabled) {
@@ -224,33 +223,41 @@ option {
   }
 }
 
-/* Intro Screen */
-.intro-screen {
+/* Intro Screen Overlay */
+.intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* Match the body background so it seamlessly blends */
+  background: #f2f2f7 radial-gradient(circle at 15% 50%, rgba(255, 182, 193, 0.4) 0%, transparent 50%);
+  z-index: 9999;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.8s;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.intro-overlay.fade-out {
+  opacity: 0;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  pointer-events: none;
 }
 
 .intro-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
   animation: float 3s ease-in-out infinite alternate;
 }
 
 @keyframes float {
-  0% { transform: translateY(0px); }
-  100% { transform: translateY(-10px); }
-}
-
-.intro-text {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #1d1d1f;
-  letter-spacing: 0.05em;
+  0% { transform: translateY(0px) scale(1); }
+  100% { transform: translateY(-5px) scale(1.02); }
 }
 
 .fade-in-app {

@@ -8,6 +8,7 @@ import { Toaster, toast } from 'react-hot-toast';
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
+  const [fadeIntro, setFadeIntro] = useState(false);
   const [email, setEmail] = useState('');
   const [telegramName, setTelegramName] = useState('');
   const [subscription, setSubscription] = useState('');
@@ -15,12 +16,20 @@ function App() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [transactionCompleted, setTransactionCompleted] = useState(false);
 
-  // Intro Timer
+  // Intro Screen Splash Timer
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const fadeTimer = setTimeout(() => {
+      setFadeIntro(true);
+    }, 2500); // Start fading out after 2.5s
+    
+    const removeTimer = setTimeout(() => {
       setShowIntro(false);
-    }, 3500); // 3.5 seconds
-    return () => clearTimeout(timer);
+    }, 3500); // Completely unmount after 3.5s
+
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(removeTimer);
+    };
   }, []);
 
   // Validate form and button state
@@ -107,24 +116,21 @@ function App() {
     setTransactionCompleted(completed);
   };
 
-  if (showIntro) {
-    return (
-      <div className="App intro-screen">
-        <div className="intro-content">
-          <Lottie
-            animationData={blockchainAnimation}
-            loop={true}
-            autoplay={true}
-            style={{ width: '150px', height: '150px' }}
-          />
-          <h1 className="intro-text">Initializing</h1>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="App fade-in-app">
+    <>
+      {showIntro && (
+        <div className={`intro-overlay ${fadeIntro ? 'fade-out' : ''}`}>
+          <div className="intro-content">
+            <Lottie
+              animationData={blockchainAnimation}
+              loop={true}
+              autoplay={true}
+              style={{ width: '120px', height: '120px' }}
+            />
+          </div>
+        </div>
+      )}
+      <div className="App fade-in-app">
       <Toaster position="top-center" />
       <header className="App-header fade-in">
         <div className="logo-container">
