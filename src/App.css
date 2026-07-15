@@ -1,45 +1,38 @@
-/* Sleek Minimalist Base */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+/* True iOS Glassmorphism Base */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 .App {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #0a0a0a;
-  color: #ededed;
-  font-family: 'Inter', sans-serif;
+  /* iOS abstract fluid wallpaper base */
+  background: 
+    radial-gradient(circle at 15% 50%, rgba(255, 182, 193, 0.6) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(135, 206, 250, 0.7) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(221, 160, 221, 0.5) 0%, transparent 50%);
+  background-color: #f2f2f7;
+  color: #1d1d1f;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   padding: 40px 20px;
   position: relative;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Subtle background glow */
-.App::before {
-  content: '';
-  position: absolute;
-  width: 60vw;
-  height: 60vw;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
-  top: -10%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* Main Container */
+/* Main Container - Frosted Glass */
 .App-header {
-  background: #111111;
-  padding: 3.5rem 3rem;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 3rem;
   width: 100%;
   max-width: 480px;
   position: relative;
   z-index: 1;
-  border: 1px solid #222222;
-  border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,20 +50,18 @@
 .lottie-container {
   width: 90px;
   height: 90px;
-  opacity: 0.9;
 }
 
 .logo {
   width: 90px;
-  opacity: 0.9;
 }
 
 /* Typography */
 h1 {
   font-size: 1.5rem;
-  margin-bottom: 2rem;
-  font-weight: 500;
-  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: #1d1d1f;
   text-align: center;
   letter-spacing: -0.02em;
 }
@@ -82,10 +73,10 @@ h1 {
 
 .description-container p {
   margin: 0;
-  font-size: 0.9rem;
-  color: #888888;
-  line-height: 1.6;
-  font-weight: 300;
+  font-size: 0.95rem;
+  color: #86868b;
+  line-height: 1.5;
+  font-weight: 400;
 }
 
 /* Form Styles */
@@ -103,53 +94,57 @@ h1 {
 }
 
 label {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 500;
-  color: #aaaaaa;
+  color: #86868b;
+  padding-left: 0.5rem;
 }
 
+/* Flat iOS Inputs */
 input, select {
   width: 100%;
-  padding: 0.85rem 1rem;
-  background: #000000;
-  border: 1px solid #333333;
-  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid transparent;
+  border-radius: 14px;
   font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
-  color: #ffffff;
+  font-size: 1rem;
+  color: #1d1d1f;
   transition: all 0.2s ease;
 }
 
 input:focus, select:focus {
   outline: none;
-  border-color: #666666;
-  box-shadow: 0 0 0 1px #666666;
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 122, 255, 0.4);
 }
 
 input::placeholder {
-  color: #555555;
+  color: #86868b;
 }
 
 select {
   appearance: none;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23888888%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2386868b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
   background-repeat: no-repeat;
-  background-position: right 1rem top 50%;
+  background-position: right 1.25rem top 50%;
   background-size: 0.65rem auto;
 }
 
 option {
-  background: #111111;
-  color: #ffffff;
+  background: #ffffff;
+  color: #1d1d1f;
 }
 
 /* Validation */
 .input-error {
-  border-color: #ff4d4d !important;
+  border-color: rgba(255, 59, 48, 0.4) !important;
+  background: rgba(255, 59, 48, 0.05) !important;
 }
 
 .input-success {
-  border-color: #4dff88 !important;
+  border-color: rgba(52, 199, 89, 0.4) !important;
+  background: rgba(52, 199, 89, 0.05) !important;
 }
 
 /* Button Container */
@@ -166,12 +161,12 @@ option {
 .send-button,
 .submit-button {
   width: 100%;
-  height: 48px;
-  border-radius: 8px;
+  height: 50px;
+  border-radius: 14px;
   font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  font-size: 0.9rem;
-  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
@@ -179,61 +174,57 @@ option {
   justify-content: center;
 }
 
-/* Wallet Adapter specific overrides */
+/* Wallet Adapter */
 .wallet-adapter-dropdown {
   width: 100%;
 }
 
 .wallet-adapter-button {
-  background: #222222 !important;
-  color: #ffffff !important;
-  border: 1px solid #333333 !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: #1d1d1f !important;
 }
 
 .wallet-adapter-button:hover {
-  background: #2a2a2a !important;
+  background: rgba(0, 0, 0, 0.08) !important;
 }
 
 /* Send Button */
 .send-button {
-  background: #ffffff;
-  color: #000000;
+  background: #007aff;
+  color: #ffffff;
 }
 
 .send-button:hover:not(:disabled) {
-  background: #e0e0e0;
+  background: #0056b3;
 }
 
 /* Submit Button */
 .submit-button {
-  background: #ffffff;
-  color: #000000;
+  background: #000000;
+  color: #ffffff;
   margin-top: 0.5rem;
 }
 
 .submit-button:hover:not(:disabled) {
-  background: #e0e0e0;
+  background: #333333;
 }
 
 .submit-button:disabled, .send-button:disabled {
-  opacity: 0.4;
+  opacity: 0.5;
   cursor: not-allowed;
-  background: #333333;
-  color: #888888;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
   .App-header {
     padding: 2rem 1.5rem;
-    border: none;
     border-radius: 0;
-    box-shadow: none;
-    background: transparent;
+    border: none;
+    background: rgba(255, 255, 255, 0.85);
   }
 }
 
-/* Smooth Minimal Intro Screen */
+/* Intro Screen */
 .intro-screen {
   display: flex;
   justify-content: center;
@@ -245,28 +236,28 @@ option {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  animation: gentlePulse 3s ease-in-out infinite alternate;
+  gap: 1.5rem;
+  animation: float 3s ease-in-out infinite alternate;
 }
 
-@keyframes gentlePulse {
-  0% { transform: scale(0.98); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 1; }
+@keyframes float {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-10px); }
 }
 
 .intro-text {
   font-family: 'Inter', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 300;
-  color: #888888;
-  letter-spacing: 0.1em;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #1d1d1f;
+  letter-spacing: 0.05em;
 }
 
 .fade-in-app {
-  animation: smoothFadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: appFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes smoothFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes appFadeIn {
+  from { opacity: 0; transform: scale(0.98); filter: blur(5px); }
+  to { opacity: 1; transform: scale(1); filter: blur(0); }
 }
