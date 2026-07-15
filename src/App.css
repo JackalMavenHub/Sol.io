@@ -1,83 +1,100 @@
-/* Main Container */
+/* Cyberpunk Web3 Base */
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600;700&display=swap');
+
 .App {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #0b0f19;
+  background-color: #000000;
   background-image: 
-    radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.25) 0%, transparent 50%),
-    radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
-  color: #f8fafc;
-  font-family: 'Inter', sans-serif;
+    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  color: #ffffff;
+  font-family: 'Space Mono', monospace;
   padding: 40px 20px;
   position: relative;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* Glassmorphism Panel */
+/* Glowing background orb */
+.App::before {
+  content: '';
+  position: absolute;
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Main Container */
 .App-header {
-  background: rgba(30, 41, 59, 0.4);
-  padding: 3rem 3.5rem;
-  border-radius: 24px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: #050505;
+  padding: 3rem;
   width: 100%;
-  max-width: 500px;
+  max-width: 550px;
   position: relative;
   z-index: 1;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 255, 0.1),
+    inset 0 0 20px rgba(139, 92, 246, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 0; /* Brutalist */
 }
 
-/* Logo and Animation Container */
+/* Logo */
 .logo-container {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .lottie-container {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
 }
 
 .logo {
   width: 100px;
-  height: auto;
-  opacity: 0.9;
+  filter: grayscale(100%) contrast(200%);
 }
 
 /* Typography */
-h2 {
-  font-size: 1.75rem;
+h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
   margin-bottom: 2rem;
-  font-weight: 600;
-  color: #f1f5f9;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
   text-align: center;
-  letter-spacing: -0.025em;
 }
 
 .description-container {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
-  padding: 1.25rem;
+  background: rgba(139, 92, 246, 0.05);
+  padding: 1.5rem;
   margin-bottom: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: 4px solid #8b5cf6;
 }
 
 .description-container p {
   margin: 0;
-  font-size: 0.95rem;
-  color: #94a3b8;
+  font-size: 0.9rem;
+  color: #a1a1aa;
   line-height: 1.6;
-  text-align: center;
 }
 
 /* Form Styles */
@@ -95,55 +112,55 @@ h2 {
 }
 
 label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #cbd5e1;
-  margin-left: 0.25rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #00ffff;
 }
 
 input, select {
   width: 100%;
-  padding: 1rem 1.25rem;
-  background: #0f172a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  padding: 1rem;
+  background: #000000;
+  border: 1px solid #333;
+  font-family: 'Space Mono', monospace;
   font-size: 1rem;
-  color: #f8fafc;
-  transition: all 0.2s ease;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  color: #fff;
+  transition: all 0.2s;
 }
 
 input:focus, select:focus {
   outline: none;
-  border-color: rgba(139, 92, 246, 0.5);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 0 0 3px rgba(139, 92, 246, 0.15);
+  border-color: #8b5cf6;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
 }
 
 input::placeholder {
-  color: #475569;
+  color: #444;
 }
 
 select {
   appearance: none;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2300ffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
   background-repeat: no-repeat;
-  background-position: right 1.25rem top 50%;
+  background-position: right 1rem top 50%;
   background-size: 0.65rem auto;
 }
 
 option {
-  background: #0f172a;
-  color: #f8fafc;
+  background: #000;
+  color: #0ff;
 }
 
-/* Validation Styles - Refined */
+/* Validation */
 .input-error {
-  border-color: rgba(239, 68, 68, 0.4) !important;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.3) !important;
 }
 
 .input-success {
-  border-color: rgba(16, 185, 129, 0.3) !important;
+  border-color: #00ffff !important;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2) !important;
 }
 
 /* Button Container */
@@ -155,18 +172,20 @@ option {
   margin: 1.5rem 0;
 }
 
-/* Base Button Styles */
+/* Buttons */
 .wallet-adapter-button,
 .send-button,
 .submit-button {
   width: 100%;
-  height: 52px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 1rem;
+  height: 50px;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
   border: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -178,53 +197,54 @@ option {
 }
 
 .wallet-adapter-button {
-  background: #1e293b !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: #f1f5f9 !important;
+  background: transparent !important;
+  border: 1px solid #8b5cf6 !important;
+  color: #8b5cf6 !important;
 }
 
 .wallet-adapter-button:hover {
-  background: #334155 !important;
+  background: rgba(139, 92, 246, 0.1) !important;
+  box-shadow: inset 0 0 15px rgba(139, 92, 246, 0.2);
 }
 
 /* Send Button */
 .send-button {
-  background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
-  color: white;
-  box-shadow: 0 4px 14px rgba(20, 184, 166, 0.25);
+  background: transparent;
+  border: 1px solid #00ffff;
+  color: #00ffff;
 }
 
 .send-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(20, 184, 166, 0.4);
+  background: rgba(0, 255, 255, 0.1);
+  box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.2);
 }
 
 /* Submit Button */
 .submit-button {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  color: white;
-  margin-top: 0.5rem;
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
+  background: #00ffff;
+  color: #000;
+  margin-top: 1rem;
 }
 
 .submit-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+  background: #fff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
 }
 
 .submit-button:disabled, .send-button:disabled {
-  opacity: 0.5;
+  opacity: 0.3;
   cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-  background: #1e293b;
-  color: #64748b;
+  border-color: #333;
+  color: #666;
+  background: transparent;
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 600px) {
   .App-header {
     padding: 2rem 1.5rem;
-    border-radius: 20px;
+    border: none;
+    border-top: 2px solid #00ffff;
+    border-bottom: 2px solid #8b5cf6;
   }
 }
