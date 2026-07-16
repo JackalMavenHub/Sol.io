@@ -1,100 +1,161 @@
 import React from 'react';
-import { Activity, Briefcase, Zap, Settings, LogOut, Wallet } from 'lucide-react';
-import logo from '../logo-rug.png';
-import { useNavigate } from 'react-router-dom';
-import '../App.css'; // Utilizing our glassmorphism styles
-import '../Dashboard.css';
+import { motion } from 'framer-motion';
+import { Activity, Zap, Shield, ChevronRight } from 'lucide-react';
+import InteractiveCard from '../components/InteractiveCard';
+
+const mockData = [
+  { id: 1, action: 'BUY', token: 'PEPE', amount: '1.5 SOL', time: '10:42:15', status: 'Success' },
+  { id: 2, action: 'SELL', token: 'WIF', amount: '0.8 SOL', time: '10:15:33', status: 'Success' },
+  { id: 3, action: 'SCAN', token: 'New LP', amount: '--', time: '09:30:11', status: 'Active' },
+  { id: 4, action: 'BUY', token: 'BONK', amount: '5.0 SOL', time: '08:12:05', status: 'Failed' },
+  { id: 5, action: 'SELL', token: 'BOME', amount: '12.4 SOL', time: '07:45:59', status: 'Success' },
+];
 
 export default function Dashboard() {
-  const navigate = useNavigate();
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { type: "spring", stiffness: 300, damping: 24 }
+    }
+  };
 
   return (
-    <div className="dashboard-container">
-      {/* Sidebar */}
-      <aside className="sidebar glass-panel">
-        <div className="sidebar-header">
-          <img src={logo} alt="Logo" className="sidebar-logo" />
-          <h2>Sol.io</h2>
+    <div className="relative min-h-screen pt-28 pb-12 px-6 max-w-7xl mx-auto z-10 text-white">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="w-full flex flex-col gap-6"
+      >
+        {/* Header / Top Stats Row */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <motion.div variants={itemVariants}>
+            <InteractiveCard className="h-full flex flex-col justify-center">
+              <span className="label-text flex items-center gap-2"><Activity size={14} className="text-copper-orange"/> Total PnL</span>
+              <div className="text-4xl font-bold tracking-tight text-white mt-1">+42.50 <span className="text-xl text-white/50">SOL</span></div>
+              <div className="text-sm text-copper-orange mt-2">+12% this week</div>
+            </InteractiveCard>
+          </motion.div>
+
+          <motion.div variants={itemVariants}>
+            <InteractiveCard className="h-full flex flex-col justify-center">
+              <span className="label-text flex items-center gap-2"><Zap size={14} className="text-solar-amber"/> Active Snipes</span>
+              <div className="text-4xl font-bold tracking-tight text-white mt-1">3 <span className="text-xl text-white/50">Bots</span></div>
+              <div className="text-sm text-solar-amber mt-2">Monitoring 4 liquidity pools</div>
+            </InteractiveCard>
+          </motion.div>
+
+          <motion.div variants={itemVariants}>
+            <InteractiveCard className="h-full flex flex-col justify-center">
+              <span className="label-text flex items-center gap-2"><Shield size={14} className="text-cosmic-blue"/> Win Rate</span>
+              <div className="text-4xl font-bold tracking-tight text-white mt-1">84.2 <span className="text-xl text-white/50">%</span></div>
+              <div className="text-sm text-cosmic-blue mt-2">Across 142 total trades</div>
+            </InteractiveCard>
+          </motion.div>
         </div>
-        
-        <nav className="sidebar-nav">
-          <a href="#" className="nav-item active"><Activity size={18} /> Dashboard</a>
-          <a href="#" className="nav-item"><Zap size={18} /> Sniper Tools</a>
-          <a href="#" className="nav-item"><Briefcase size={18} /> Portfolio</a>
-          <a href="#" className="nav-item"><Settings size={18} /> Settings</a>
-        </nav>
 
-        <div className="sidebar-footer">
-          <button className="nav-item logout-btn" onClick={() => navigate('/')}>
-            <LogOut size={18} /> Disconnect
-          </button>
-        </div>
-      </aside>
-
-      {/* Main Content Area */}
-      <main className="main-content">
-        {/* Top bar */}
-        <header className="topbar glass-panel">
-          <div className="topbar-title">
-            <h1>Overview</h1>
-          </div>
-          <div className="topbar-actions">
-            <div className="wallet-badge">
-              <Wallet size={16} /> Connected: DqJ1...pKA7
-            </div>
-            <div className="network-badge">Mainnet-Beta</div>
-          </div>
-        </header>
-
-        {/* Dashboard Widgets */}
-        <div className="dashboard-grid">
+        {/* Main Work Area */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
           
-          <div className="widget glass-panel">
-            <h3>Total Profit</h3>
-            <div className="widget-value text-green">+42.5 SOL</div>
-            <p className="widget-sub">Last 30 days</p>
-          </div>
+          {/* Left: Control Deck */}
+          <motion.div variants={itemVariants} className="lg:col-span-1 flex flex-col gap-6">
+            <InteractiveCard className="flex-1">
+              <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
+                Quick Execute
+              </h2>
+              
+              <div className="flex flex-col gap-5">
+                <div className="form-group">
+                  <span className="label-text">Target Contract Address</span>
+                  <input type="text" className="glass-input font-mono text-sm" placeholder="Paste Solana address..." />
+                </div>
+                
+                <div className="form-group">
+                  <span className="label-text flex justify-between">
+                    <span>Amount (SOL)</span>
+                    <span className="text-white">1.50 SOL</span>
+                  </span>
+                  {/* Custom Slider Simulation */}
+                  <div className="h-2 w-full bg-black/50 rounded-full mt-2 relative border border-white/5">
+                    <div className="absolute left-0 top-0 h-full w-[30%] bg-gradient-to-r from-copper-orange to-solar-amber rounded-full shadow-[0_0_10px_rgba(224,122,95,0.5)]"></div>
+                    <div className="absolute left-[30%] top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-lg border border-copper-orange"></div>
+                  </div>
+                </div>
 
-          <div className="widget glass-panel">
-            <h3>Active Snipes</h3>
-            <div className="widget-value">3</div>
-            <p className="widget-sub">Monitoring mempool...</p>
-          </div>
+                <div className="flex gap-3 mt-4">
+                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="glass-btn glass-btn-primary flex-1 py-3">
+                    Snipe Now
+                  </motion.button>
+                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="glass-btn bg-white/5 border border-white/10 hover:bg-white/10 flex-1 py-3 text-white/80">
+                    Queue
+                  </motion.button>
+                </div>
+              </div>
+            </InteractiveCard>
+          </motion.div>
 
-          <div className="widget glass-panel">
-            <h3>Win Rate</h3>
-            <div className="widget-value">84.2%</div>
-            <p className="widget-sub">Based on 142 trades</p>
-          </div>
-
-          <div className="widget glass-panel span-2">
-            <div className="widget-header">
-              <h3>Live Activity Feed</h3>
-              <div className="live-indicator"></div>
-            </div>
-            <div className="activity-list">
-              <div className="activity-item">
-                <span className="time">10:42 AM</span>
-                <span className="action buy">BUY</span>
-                <span className="token">PEPE</span>
-                <span className="amount">1.5 SOL</span>
+          {/* Right: Live Visualization / Telemetry */}
+          <motion.div variants={itemVariants} className="lg:col-span-2 flex flex-col">
+            <InteractiveCard className="flex-1 overflow-hidden flex flex-col p-0">
+              <div className="p-6 border-b border-white/5 flex justify-between items-center">
+                <h2 className="text-lg font-bold flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
+                  Live Telemetry
+                </h2>
+                <button className="text-xs font-semibold uppercase tracking-wider text-white/50 hover:text-white transition-colors flex items-center">
+                  View All <ChevronRight size={14} />
+                </button>
               </div>
-              <div className="activity-item">
-                <span className="time">10:15 AM</span>
-                <span className="action sell">SELL</span>
-                <span className="token">WIF</span>
-                <span className="amount text-green">+0.8 SOL</span>
+              
+              <div className="flex-1 p-6 overflow-y-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5">Action</th>
+                      <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5">Token</th>
+                      <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5">Amount</th>
+                      <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5 text-right">Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {mockData.map((row) => (
+                      <motion.tr 
+                        key={row.id}
+                        whileHover={{ backgroundColor: "rgba(255,255,255,0.03)" }}
+                        className="group border-b border-white/5 last:border-0 transition-colors cursor-pointer"
+                      >
+                        <td className="py-4">
+                          <span className={`text-xs font-bold px-2 py-1 rounded-md border ${
+                            row.action === 'BUY' ? 'bg-copper-orange/10 border-copper-orange/20 text-copper-orange' : 
+                            row.action === 'SELL' ? 'bg-red-500/10 border-red-500/20 text-red-500' : 
+                            'bg-cosmic-blue/10 border-cosmic-blue/20 text-cosmic-blue'
+                          }`}>
+                            {row.action}
+                          </span>
+                        </td>
+                        <td className="py-4 font-medium">{row.token}</td>
+                        <td className="py-4 font-mono text-sm">{row.amount}</td>
+                        <td className="py-4 font-mono text-sm text-right text-white/50">{row.time}</td>
+                      </motion.tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-              <div className="activity-item">
-                <span className="time">09:30 AM</span>
-                <span className="action scan">SCAN</span>
-                <span className="token">New Liquidity Pool detected...</span>
-              </div>
-            </div>
-          </div>
+            </InteractiveCard>
+          </motion.div>
 
         </div>
-      </main>
+      </motion.div>
     </div>
   );
 }

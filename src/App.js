@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
+import AmbientBackground from './components/AmbientBackground';
+import GlassNav from './components/GlassNav';
 import { Toaster } from 'react-hot-toast';
 import './App.css';
 
@@ -19,6 +21,8 @@ function App() {
           },
         }}
       />
+      <AmbientBackground />
+      <GlassNav />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
