@@ -29,7 +29,6 @@ const generateRandomSnipe = () => {
 
 export default function AnalyticsPage() {
   const [tokens, setTokens] = useState([]);
-  const [chartData, setChartData] = useState([]);
   const [snipes, setSnipes] = useState(() => Array.from({ length: 5 }, generateRandomSnipe));
   const [stats, setStats] = useState({ volume: '$0.0M', pools: '0' });
   const [isLoading, setIsLoading] = useState(true);
@@ -82,24 +81,6 @@ export default function AnalyticsPage() {
           pools: uniqueTokensMap.size.toString()
         });
         
-        // Generate realistic 7-day chart data based on the real current volume
-        // This avoids CoinGecko public API CORS/429 rate limit issues on the client
-        const historyData = [];
-        let currentDayVol = totalVolume > 0 ? totalVolume : 1500000000; // fallback to 1.5B
-        const now = new Date();
-        
-        for (let i = 6; i >= 0; i--) {
-          const date = new Date(now);
-          date.setDate(date.getDate() - i);
-          
-          // Add some realistic volatility (+/- 25%) to previous days
-          const volatility = 1 + (Math.sin(i * 123.45) * 0.25);
-          const dayVol = currentDayVol * volatility;
-          
-          historyData.push([date.getTime(), dayVol]);
-        }
-        
-        setChartData(historyData);
         setLastUpdated(new Date());
       }
     } catch (error) {
