@@ -59,6 +59,8 @@ export default function Dashboard() {
                   <span className="label-text">Target Contract Address</span>
                   <input 
                     type="text" 
+                    id="targetAddress"
+                    name="targetAddress"
                     className="glass-input font-mono text-sm" 
                     placeholder="Paste Solana address..." 
                     value={targetAddress}
@@ -74,6 +76,8 @@ export default function Dashboard() {
                   <div className="flex flex-col gap-2 mt-2">
                     <input 
                       type="number" 
+                      id="snipeAmountNumber"
+                      name="snipeAmountNumber"
                       className="glass-input font-mono text-sm w-full bg-white/5" 
                       placeholder="0.00"
                       step="0.1"
@@ -83,6 +87,8 @@ export default function Dashboard() {
                     />
                     <input 
                       type="range" 
+                      id="snipeAmountRange"
+                      name="snipeAmountRange"
                       min="0.1" 
                       max="10" 
                       step="0.1" 
