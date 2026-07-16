@@ -10,8 +10,8 @@ export default function GlassNav() {
   const navItems = [
     { path: '/', label: 'Overview' },
     { path: '/dashboard', label: 'Terminal' },
-    { path: '#snipe', label: 'Snipe' },
-    { path: '#analytics', label: 'Analytics' },
+    { path: '/sniper', label: 'Snipe' },
+    { path: '/analytics', label: 'Analytics' },
   ];
 
   return (
