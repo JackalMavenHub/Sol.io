@@ -1,22 +1,90 @@
-import React from 'react';
-import { BarChart3, TrendingUp, Activity, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { BarChart3, TrendingUp, Activity, ArrowUpRight, ArrowDownRight, RefreshCw, Loader2 } from 'lucide-react';
 import InteractiveCard from '../components/InteractiveCard';
+import { toast } from 'react-hot-toast';
 
-const mockTokens = [
-  { rank: 1, symbol: 'WIF', volume: '$142.5M', change: '+24.5%', isUp: true, liquidity: '$8.2M' },
-  { rank: 2, symbol: 'PEPE', volume: '$98.2M', change: '-5.2%', isUp: false, liquidity: '$12.4M' },
-  { rank: 3, symbol: 'BONK', volume: '$65.1M', change: '+12.8%', isUp: true, liquidity: '$5.1M' },
-  { rank: 4, symbol: 'BOME', volume: '$42.9M', change: '+8.4%', isUp: true, liquidity: '$3.8M' },
-  { rank: 5, symbol: 'POPCAT', volume: '$28.4M', change: '-1.5%', isUp: false, liquidity: '$1.9M' },
-];
+// WIF, BONK, BOME, POPCAT, JUP
+const TOKEN_ADDRESSES = "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm,DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263,ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82,7GCihgDB8fe6KNjn2g4X3f8Nq4X4Q7u2kE6pX2aGv63t,JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbZedPFTEPsCz";
 
 export default function AnalyticsPage() {
+  const [tokens, setTokens] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState(null);
+
+  const fetchTokenData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${TOKEN_ADDRESSES}`);
+      if (!response.ok) throw new Error('Failed to fetch data');
+      
+      const data = await response.json();
+      
+      if (data.pairs) {
+        // Dexscreener can return multiple pairs per token (e.g. USDC, SOL pairs). 
+        // We'll filter to get the highest volume pair for each base token.
+        const uniqueTokensMap = new Map();
+        
+        data.pairs.forEach(pair => {
+          if (pair.chainId !== 'solana') return;
+          const address = pair.baseToken.address;
+          const currentVol = pair.volume?.h24 || 0;
+          
+          if (!uniqueTokensMap.has(address) || uniqueTokensMap.get(address).volume.h24 < currentVol) {
+            uniqueTokensMap.set(address, pair);
+          }
+        });
+
+        const formattedTokens = Array.from(uniqueTokensMap.values())
+          .sort((a, b) => (b.volume?.h24 || 0) - (a.volume?.h24 || 0))
+          .map((pair, index) => ({
+            rank: index + 1,
+            symbol: pair.baseToken.symbol,
+            price: `$${parseFloat(pair.priceUsd).toPrecision(4)}`,
+            volume: `$${((pair.volume?.h24 || 0) / 1000000).toFixed(1)}M`,
+            change: `${pair.priceChange?.h24 >= 0 ? '+' : ''}${pair.priceChange?.h24 || 0}%`,
+            isUp: pair.priceChange?.h24 >= 0,
+            liquidity: `$${((pair.liquidity?.usd || 0) / 1000000).toFixed(1)}M`
+          }));
+          
+        setTokens(formattedTokens);
+        setLastUpdated(new Date());
+      }
+    } catch (error) {
+      console.error("Error fetching market data:", error);
+      toast.error("Failed to sync live market data.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTokenData();
+  }, []);
+
   return (
     <div className="relative min-h-screen pt-28 pb-12 px-6 max-w-6xl mx-auto z-10 text-white flex flex-col gap-6">
       
-      <div className="flex items-center gap-3 mb-2">
-        <BarChart3 className="text-cosmic-blue" size={24} />
-        <h1 className="text-2xl font-bold tracking-tight">Market Analytics</h1>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-3">
+          <BarChart3 className="text-cosmic-blue" size={24} />
+          <h1 className="text-2xl font-bold tracking-tight">Market Analytics</h1>
+        </div>
+        
+        <div className="flex items-center gap-4">
+          {lastUpdated && (
+            <span className="text-xs text-white/40 hidden sm:block">
+              Last updated: {lastUpdated.toLocaleTimeString()}
+            </span>
+          )}
+          <button 
+            onClick={fetchTokenData}
+            disabled={isLoading}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-sm font-medium transition-all disabled:opacity-50"
+          >
+            {isLoading ? <Loader2 size={16} className="animate-spin" /> : <RefreshCw size={16} />}
+            {isLoading ? 'Syncing...' : 'Refresh Data'}
+          </button>
+        </div>
       </div>
 
       {/* Top Stats */}
@@ -69,11 +137,11 @@ export default function AnalyticsPage() {
 
         {/* Trending Table */}
         <div className="lg:col-span-1 flex flex-col">
-          <InteractiveCard className="flex-1 p-0 overflow-hidden">
-            <div className="p-6 border-b border-white/5">
+          <InteractiveCard className="flex-1 p-0 overflow-hidden flex flex-col min-h-[400px]">
+            <div className="p-6 border-b border-white/5 flex justify-between items-center">
               <h2 className="text-lg font-bold">Top Trending Pools</h2>
             </div>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto flex-1">
               <table className="w-full text-left border-collapse min-w-[300px]">
                 <thead>
                   <tr>
@@ -82,18 +150,33 @@ export default function AnalyticsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {mockTokens.map((token) => (
-                    <tr key={token.rank} className="border-b border-white/5 last:border-0 hover:bg-white/5 cursor-pointer">
+                  {isLoading ? (
+                    <tr>
+                      <td colSpan="2" className="px-6 py-12 text-center text-white/40">
+                        <Loader2 size={24} className="animate-spin mx-auto mb-2" />
+                        Fetching live data...
+                      </td>
+                    </tr>
+                  ) : tokens.map((token) => (
+                    <tr key={token.symbol} className="border-b border-white/5 last:border-0 hover:bg-white/5 cursor-pointer transition-colors">
                       <td className="px-6 py-4">
                         <div className="flex flex-col">
-                          <span className="font-bold text-sm">{token.symbol}</span>
+                          <span className="font-bold text-sm flex items-center gap-2">
+                            {token.symbol}
+                            <span className="text-[10px] text-white/30 font-normal bg-white/5 px-1.5 py-0.5 rounded">{token.price}</span>
+                          </span>
                           <span className={`text-xs flex items-center gap-1 ${token.isUp ? 'text-copper-orange' : 'text-red-500'}`}>
                             {token.isUp ? <ArrowUpRight size={12}/> : <ArrowDownRight size={12}/>}
                             {token.change}
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-right font-mono text-sm">{token.volume}</td>
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex flex-col items-end">
+                          <span className="font-mono text-sm">{token.volume}</span>
+                          <span className="text-xs text-white/30 font-mono">Liq: {token.liquidity}</span>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
