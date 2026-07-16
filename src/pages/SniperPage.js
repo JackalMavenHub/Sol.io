@@ -9,7 +9,7 @@ export default function SniperPage() {
   const [amount, setAmount] = useState('5.0');
   const [slippage, setSlippage] = useState('1.0');
   const [priorityFee, setPriorityFee] = useState('0.005');
-  const [antiMev, setAntiMev] = useState(true);
+  const [antiMev] = useState(true);
 
   return (
     <WalletGate>
