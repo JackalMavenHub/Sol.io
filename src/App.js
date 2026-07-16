@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import SniperPage from './pages/SniperPage';
-import AnalyticsPage from './pages/AnalyticsPage';
+import PortfolioPage from './pages/PortfolioPage';
 import GlassNav from './components/GlassNav';
 import { Toaster } from 'react-hot-toast';
 import './App.css';
@@ -30,7 +30,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/sniper" element={<SniperPage />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
         </Routes>
       </Router>
     </WalletContextProvider>

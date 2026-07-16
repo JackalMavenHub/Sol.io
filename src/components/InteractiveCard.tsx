@@ -11,11 +11,11 @@ interface InteractiveCardProps {
 export default function InteractiveCard({ children, className = '', delay = 0, disableEntryAnimation = false }: InteractiveCardProps) {
   return (
     <motion.div
-      initial={disableEntryAnimation ? false : { opacity: 0, y: 20 }}
+      initial={disableEntryAnimation ? false : { opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ scale: 1.01 }}
-      className={`minimal-panel p-6 ${className}`}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -4 }}
+      className={`clay-panel p-8 ${className}`}
     >
       <div className="relative z-10">
         {children}

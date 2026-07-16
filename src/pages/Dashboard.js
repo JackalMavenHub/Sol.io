@@ -17,31 +17,31 @@ export default function Dashboard() {
 
   return (
     <WalletGate>
-      <div className="relative min-h-screen pt-28 pb-12 px-6 max-w-7xl mx-auto z-10 text-white">
+      <div className="relative min-h-screen pt-28 pb-12 px-6 max-w-7xl mx-auto z-10 text-clay-text">
       <div className="w-full flex flex-col gap-6">
         {/* Header / Top Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <InteractiveCard className="h-full flex flex-col justify-center">
-              <span className="label-text flex items-center gap-2"><Activity size={14} className="text-white"/> Total PnL</span>
-              <div className="text-4xl font-bold tracking-tight text-white mt-1">+42.50 <span className="text-xl text-minimal-muted">SOL</span></div>
-              <div className="text-sm text-minimal-muted mt-2">+12% this week</div>
+              <span className="label-text flex items-center gap-2"><Activity size={14} className="text-clay-text"/> Total PnL</span>
+              <div className="text-4xl font-bold tracking-tight text-clay-text mt-1">+42.50 <span className="text-xl text-clay-muted">SOL</span></div>
+              <div className="text-sm text-clay-muted mt-2">+12% this week</div>
             </InteractiveCard>
           </div>
 
           <div>
             <InteractiveCard className="h-full flex flex-col justify-center">
-              <span className="label-text flex items-center gap-2"><Zap size={14} className="text-white"/> Active Snipes</span>
-              <div className="text-4xl font-bold tracking-tight text-white mt-1">3 <span className="text-xl text-minimal-muted">Bots</span></div>
-              <div className="text-sm text-minimal-muted mt-2">Monitoring 4 liquidity pools</div>
+              <span className="label-text flex items-center gap-2"><Zap size={14} className="text-clay-text"/> Active Snipes</span>
+              <div className="text-4xl font-bold tracking-tight text-clay-text mt-1">3 <span className="text-xl text-clay-muted">Bots</span></div>
+              <div className="text-sm text-clay-muted mt-2">Monitoring 4 liquidity pools</div>
             </InteractiveCard>
           </div>
 
           <div>
             <InteractiveCard className="h-full flex flex-col justify-center">
-              <span className="label-text flex items-center gap-2"><Shield size={14} className="text-white"/> Win Rate</span>
-              <div className="text-4xl font-bold tracking-tight text-white mt-1">84.2 <span className="text-xl text-minimal-muted">%</span></div>
-              <div className="text-sm text-minimal-muted mt-2">Across 142 total trades</div>
+              <span className="label-text flex items-center gap-2"><Shield size={14} className="text-clay-text"/> Win Rate</span>
+              <div className="text-4xl font-bold tracking-tight text-clay-text mt-1">84.2 <span className="text-xl text-clay-muted">%</span></div>
+              <div className="text-sm text-clay-muted mt-2">Across 142 total trades</div>
             </InteractiveCard>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function Dashboard() {
                     type="text" 
                     id="targetAddress"
                     name="targetAddress"
-                    className="minimal-input font-mono text-sm" 
+                    className="clay-input font-mono text-sm" 
                     placeholder="Paste Solana address..." 
                     value={targetAddress}
                     onChange={(e) => setTargetAddress(e.target.value)}
@@ -73,14 +73,14 @@ export default function Dashboard() {
                 <div className="form-group">
                   <span className="label-text flex justify-between">
                     <span>Amount (SOL)</span>
-                    <span className="text-white">{snipeAmount} SOL</span>
+                    <span className="text-clay-text">{snipeAmount} SOL</span>
                   </span>
                   <div className="flex flex-col gap-2 mt-2">
                     <input 
                       type="number" 
                       id="snipeAmountNumber"
                       name="snipeAmountNumber"
-                      className="minimal-input font-mono text-sm w-full bg-black" 
+                      className="clay-input font-mono text-sm w-full bg-black" 
                       placeholder="0.00"
                       step="0.1"
                       min="0"
@@ -102,10 +102,10 @@ export default function Dashboard() {
                 </div>
 
                 <div className="flex gap-3 mt-4">
-                  <button className="minimal-btn minimal-btn-primary flex-1 py-3">
+                  <button className="clay-btn clay-btn-primary flex-1 py-3">
                     Snipe Now
                   </button>
-                  <button className="minimal-btn minimal-btn-secondary flex-1 py-3">
+                  <button className="clay-btn clay-btn-secondary flex-1 py-3">
                     Queue
                   </button>
                 </div>
@@ -116,12 +116,12 @@ export default function Dashboard() {
           {/* Right: Live Visualization / Telemetry */}
           <div className="lg:col-span-2 flex flex-col">
             <InteractiveCard className="flex-1 overflow-hidden flex flex-col p-0">
-              <div className="p-6 border-b border-minimal-border flex justify-between items-center">
+              <div className="p-6 border-b border-gray-300 flex justify-between items-center">
                 <h2 className="text-lg font-bold flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>
                   Live Telemetry
                 </h2>
-                <button className="text-xs font-semibold uppercase tracking-wider text-minimal-muted hover:text-white transition-colors flex items-center">
+                <button className="text-xs font-semibold uppercase tracking-wider text-clay-muted hover:text-clay-text transition-colors flex items-center">
                   View All <ChevronRight size={14} />
                 </button>
               </div>
@@ -133,30 +133,30 @@ export default function Dashboard() {
                   <table className="w-full text-left border-collapse">
                     <thead>
                       <tr>
-                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-minimal-muted border-b border-minimal-border">Action</th>
-                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-minimal-muted border-b border-minimal-border">Token</th>
-                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-minimal-muted border-b border-minimal-border">Amount</th>
-                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-minimal-muted border-b border-minimal-border text-right">Time</th>
+                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-clay-muted border-b border-gray-300">Action</th>
+                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-clay-muted border-b border-gray-300">Token</th>
+                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-clay-muted border-b border-gray-300">Amount</th>
+                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-clay-muted border-b border-gray-300 text-right">Time</th>
                       </tr>
                     </thead>
                     <tbody>
                       {mockData.map((row) => (
                         <tr 
                           key={row.id}
-                          className="group border-b border-minimal-border last:border-0 hover:bg-white/[0.02] transition-colors cursor-pointer"
+                          className="group border-b border-gray-300 last:border-0 hover:bg-white/[0.02] transition-colors cursor-pointer"
                         >
                           <td className="py-4">
                             <span className={`text-xs font-bold px-2 py-1 rounded-md border ${
                               row.action === 'BUY' ? 'bg-white text-black border-white' : 
-                              row.action === 'SELL' ? 'bg-transparent border-white/20 text-white' : 
-                              'bg-neutral-800 border-neutral-700 text-white'
+                              row.action === 'SELL' ? 'bg-transparent border-white/20 text-clay-text' : 
+                              'bg-neutral-800 border-neutral-700 text-clay-text'
                             }`}>
                               {row.action}
                             </span>
                           </td>
                           <td className="py-4 font-medium">{row.token}</td>
                           <td className="py-4 font-mono text-sm">{row.amount}</td>
-                          <td className="py-4 font-mono text-sm text-right text-minimal-muted">{row.time}</td>
+                          <td className="py-4 font-mono text-sm text-right text-clay-muted">{row.time}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -166,13 +166,13 @@ export default function Dashboard() {
                 {/* Mobile Card Layout */}
                 <div className="md:hidden flex flex-col gap-4">
                   {mockData.map((row) => (
-                    <div key={row.id} className="p-4 rounded-xl border border-minimal-border bg-minimal-surface flex flex-col gap-2">
+                    <div key={row.id} className="p-4 rounded-xl border border-gray-300 hover:bg-white/30 flex flex-col gap-2">
                       <div className="flex justify-between items-center">
-                        <span className="font-bold text-sm text-white">{row.action} {row.token}</span>
+                        <span className="font-bold text-sm text-clay-text">{row.action} {row.token}</span>
                         <span className="font-mono text-sm">{row.amount}</span>
                       </div>
                       <div className="flex justify-between items-center text-xs">
-                        <span className="font-mono text-minimal-muted">{row.time}</span>
+                        <span className="font-mono text-clay-muted">{row.time}</span>
                       </div>
                     </div>
                   ))}

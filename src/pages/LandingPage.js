@@ -77,10 +77,10 @@ export default function LandingPage() {
             <div className="relative mb-6">
               <img src={logo} alt="Logo" className="w-16 h-16 relative z-10 rounded-2xl shadow-xl border border-white/5" />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-2 text-center tracking-tight">
+            <h1 className="text-3xl font-extrabold text-clay-text mb-2 text-center tracking-tight">
               Deploy Your Instance
             </h1>
-            <p className="text-white/50 text-sm text-center max-w-sm">
+            <p className="text-clay-muted text-sm font-bold text-center max-w-sm">
               Securely register and authenticate via Solana. Access the most powerful mempool sniper interface.
             </p>
           </div>
@@ -92,11 +92,11 @@ export default function LandingPage() {
             <div className="form-group">
               <span className="label-text">Email Address</span>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" size={18} />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-clay-muted" size={18} />
                 <input
                   type="email"
                   name="email"
-                  className={`minimal-input pl-12 ${errors.email ? 'border-red-500/50 focus:ring-red-500/50' : ''}`}
+                  className={`clay-input pl-12 ${errors.email ? 'ring-2 ring-red-500/50' : ''}`}
                   placeholder="admin@sol.io"
                   value={email}
                   onChange={handleInputChange}
@@ -109,11 +109,11 @@ export default function LandingPage() {
             <div className="form-group">
               <span className="label-text">Telegram Handle</span>
               <div className="relative">
-                <MessageCircle className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" size={18} />
+                <MessageCircle className="absolute left-4 top-1/2 -translate-y-1/2 text-clay-muted" size={18} />
                 <input
                   type="text"
                   name="telegram"
-                  className={`minimal-input pl-12 ${errors.telegram ? 'border-red-500/50 focus:ring-red-500/50' : ''}`}
+                  className={`clay-input pl-12 ${errors.telegram ? 'ring-2 ring-red-500/50' : ''}`}
                   placeholder="@username"
                   value={telegramName}
                   onChange={handleInputChange}
@@ -126,10 +126,10 @@ export default function LandingPage() {
             <div className="form-group">
               <span className="label-text">Subscription Tier</span>
               <div className="relative">
-                <Key className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10" size={18} />
+                <Key className="absolute left-4 top-1/2 -translate-y-1/2 text-clay-muted z-10" size={18} />
                 <select
                   name="subscription"
-                  className="minimal-input pl-12 relative z-0"
+                  className="clay-input pl-12 relative z-0"
                   value={subscription}
                   onChange={handleInputChange}
                   required
@@ -143,7 +143,7 @@ export default function LandingPage() {
 
             <div className="mt-4 pt-4 border-t border-white/5">
               {!connected ? (
-                <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center text-sm text-white/70">
+                <div className="p-4 rounded-xl clay-panel text-center text-sm font-bold text-clay-muted">
                   Please connect your wallet using the top navigation bar to proceed.
                 </div>
               ) : (
@@ -159,7 +159,7 @@ export default function LandingPage() {
             <button
               type="submit"
               disabled={isButtonDisabled}
-              className={`minimal-btn py-4 mt-2 ${!isButtonDisabled ? 'hover:scale-[1.02] active:scale-98 transition-all duration-300' : ''} ${isButtonDisabled ? 'bg-white/5 text-white/30 cursor-not-allowed border border-white/5' : 'minimal-btn-primary'}`}
+              className={`clay-btn py-4 mt-2 ${isButtonDisabled ? 'opacity-50 cursor-not-allowed' : 'clay-btn-primary hover:-translate-y-1'}`}
             >
               <ShieldCheck size={18} className="mr-2" /> 
               {transactionCompleted ? 'Enter Dashboard' : 'Complete Payment to Proceed'}

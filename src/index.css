@@ -2,12 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    --background: 216 20% 90%;
+    --foreground: 222 47% 11%;
   }
   
   html {
@@ -15,38 +15,53 @@
   }
   
   body {
-    @apply bg-minimal-bg text-white min-h-screen overflow-x-hidden;
+    @apply bg-clay-bg text-clay-text min-h-screen overflow-x-hidden;
     margin: 0;
   }
 }
 
 @layer components {
-  /* Minimalist 1.0 Base */
-  .minimal-panel {
-    @apply bg-minimal-surface rounded-xl relative overflow-hidden;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  /* Claymorphism Base */
+  .clay-panel {
+    @apply bg-clay-surface rounded-3xl relative;
+    box-shadow: 
+      9px 9px 16px rgba(163, 177, 198, 0.6), 
+      -9px -9px 16px rgba(255, 255, 255, 0.5);
   }
   
   /* Input Fields */
-  .minimal-input {
-    @apply w-full bg-[#111] border-none rounded-lg px-4 py-3 text-white placeholder-minimal-muted focus:outline-none focus:ring-1 focus:ring-white transition-all duration-300;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  .clay-input {
+    @apply w-full bg-clay-surface rounded-2xl px-5 py-4 text-clay-text placeholder-clay-muted focus:outline-none transition-all duration-300;
+    box-shadow: 
+      inset 6px 6px 10px 0 rgba(163, 177, 198, 0.5), 
+      inset -6px -6px 10px 0 rgba(255, 255, 255, 0.8);
+  }
+
+  .clay-input:focus {
+    box-shadow: 
+      inset 8px 8px 12px 0 rgba(163, 177, 198, 0.6), 
+      inset -8px -8px 12px 0 rgba(255, 255, 255, 0.9);
   }
   
-  .minimal-btn {
-    @apply relative overflow-hidden rounded-lg font-medium tracking-wide flex items-center justify-center transition-all duration-300;
+  .clay-btn {
+    @apply relative overflow-hidden rounded-2xl font-bold tracking-wide flex items-center justify-center transition-all duration-300 text-clay-text bg-clay-surface;
+    box-shadow: 
+      9px 9px 16px rgba(163, 177, 198, 0.6), 
+      -9px -9px 16px rgba(255, 255, 255, 0.5);
+  }
+
+  .clay-btn:active, .clay-btn.pressed {
+    box-shadow: 
+      inset 6px 6px 10px 0 rgba(163, 177, 198, 0.5), 
+      inset -6px -6px 10px 0 rgba(255, 255, 255, 0.8);
   }
   
-  .minimal-btn-primary {
-    @apply bg-white text-black font-semibold hover:bg-neutral-200;
-  }
-  
-  .minimal-btn-secondary {
-    @apply bg-transparent text-white border border-white/20 hover:bg-white/5;
+  .clay-btn-primary {
+    @apply text-clay-accent;
   }
   
   /* Text styles */
   .label-text {
-    @apply text-xs font-medium tracking-wider text-minimal-muted mb-2 block uppercase;
+    @apply text-sm font-bold tracking-wide text-clay-muted mb-2 block;
   }
 }

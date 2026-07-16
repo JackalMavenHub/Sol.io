@@ -13,7 +13,7 @@ export default function SniperPage() {
 
   return (
     <WalletGate>
-      <div className="relative min-h-screen pt-28 pb-12 px-6 max-w-4xl mx-auto z-10 text-white flex flex-col gap-8">
+      <div className="relative bg-clay-surface pt-28 pb-12 px-6 max-w-4xl mx-auto z-10 text-clay-text flex flex-col gap-8">
       
       {/* Header */}
       <div className="flex flex-col items-center mb-4">
@@ -21,7 +21,7 @@ export default function SniperPage() {
           <Target size={28} className="text-copper-orange" />
         </div>
         <h1 className="text-3xl font-bold tracking-tight">Advanced Sniper</h1>
-        <p className="text-white/50 text-sm mt-2 max-w-md text-center">Configure ultra-low latency memory pool sniping parameters with built-in MEV protection.</p>
+        <p className="text-clay-text/50 text-sm mt-2 max-w-md text-center">Configure ultra-low latency memory pool sniping parameters with built-in MEV protection.</p>
       </div>
 
       <InteractiveCard className="p-8">
@@ -53,7 +53,7 @@ export default function SniperPage() {
               <div className="flex flex-col gap-3">
                 <input 
                   type="number" 
-                  className="minimal-input font-mono text-sm bg-white/5" 
+                  className="clay-input font-mono text-sm bg-white/5" 
                   step="0.1"
                   min="0.1"
                   value={amount}
@@ -84,7 +84,7 @@ export default function SniperPage() {
                     className={`flex-1 py-3 rounded-lg text-sm font-bold border transition-all whitespace-nowrap ${
                       slippage === val 
                         ? 'bg-copper-orange/20 border-copper-orange text-copper-orange' 
-                        : 'bg-white/5 border-white/10 text-white/50 hover:bg-white/10 hover:text-white'
+                        : 'bg-white/5 border-white/10 text-clay-text/50 hover:bg-white/30 hover:text-clay-text'
                     }`}
                   >
                     {val}%
@@ -94,7 +94,7 @@ export default function SniperPage() {
             </div>
           </div>
 
-          <div className="border-t border-white/5 pt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="border-t border-clay-gray-300/5 pt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Priority Fee */}
             <div className="form-group">
               <span className="label-text flex justify-between">
@@ -108,7 +108,7 @@ export default function SniperPage() {
                 onChange={(e) => setPriorityFee(e.target.value)}
                 className="w-full h-2 mt-4 bg-black/50 rounded-full appearance-none cursor-pointer accent-solar-amber"
               />
-              <div className="flex justify-between text-xs text-white/40 mt-2 font-mono">
+              <div className="flex justify-between text-xs text-clay-text/40 mt-2 font-mono">
                 <span>Standard</span>
                 <span>Fast</span>
                 <span>Turbo</span>
@@ -132,14 +132,14 @@ export default function SniperPage() {
                     </div>
                     <span className="text-sm font-medium">Anti-MEV Protection</span>
                   </div>
-                  <AlertTriangle size={14} className={antiMev ? 'text-copper-orange' : 'text-white/20'} />
+                  <AlertTriangle size={14} className={antiMev ? 'text-copper-orange' : 'text-clay-text/20'} />
                 </label>
               </div>
             </div>
           </div>
 
           {/* Action Button */}
-          <button type="submit" className="minimal-btn minimal-btn-primary w-full py-4 mt-6">
+          <button type="submit" className="clay-btn clay-btn-primary w-full py-4 mt-6">
             Initialize Snipe
           </button>
         </form>
