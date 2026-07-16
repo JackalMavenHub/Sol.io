@@ -92,7 +92,7 @@ const SendButton = ({ updateButtonState, priceInSOL }: WalletProps) => {
             
             toast.success(`Transaction successful!`, { id: toastId });
             updateButtonState(true);
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error sending transaction:', error);
             if (error?.message?.includes('User rejected')) {
                 toast.error('Transaction rejected by user.');
