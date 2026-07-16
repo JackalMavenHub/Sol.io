@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Activity, Zap, Shield, ChevronRight } from 'lucide-react';
 import InteractiveCard from '../components/InteractiveCard';
 
@@ -11,6 +11,9 @@ const mockData = [
 ];
 
 export default function Dashboard() {
+  const [targetAddress, setTargetAddress] = useState('');
+  const [snipeAmount, setSnipeAmount] = useState('1.50');
+
   return (
     <div className="relative min-h-screen pt-28 pb-12 px-6 max-w-7xl mx-auto z-10 text-white">
       <div className="w-full flex flex-col gap-6">
@@ -54,18 +57,39 @@ export default function Dashboard() {
               <div className="flex flex-col gap-5">
                 <div className="form-group">
                   <span className="label-text">Target Contract Address</span>
-                  <input type="text" className="glass-input font-mono text-sm" placeholder="Paste Solana address..." />
+                  <input 
+                    type="text" 
+                    className="glass-input font-mono text-sm" 
+                    placeholder="Paste Solana address..." 
+                    value={targetAddress}
+                    onChange={(e) => setTargetAddress(e.target.value)}
+                  />
                 </div>
                 
                 <div className="form-group">
                   <span className="label-text flex justify-between">
                     <span>Amount (SOL)</span>
-                    <span className="text-white">1.50 SOL</span>
+                    <span className="text-white">{snipeAmount} SOL</span>
                   </span>
-                  {/* Custom Slider Simulation */}
-                  <div className="h-2 w-full bg-black/50 rounded-full mt-2 relative border border-white/5">
-                    <div className="absolute left-0 top-0 h-full w-[30%] bg-gradient-to-r from-copper-orange to-solar-amber rounded-full shadow-[0_0_10px_rgba(224,122,95,0.5)]"></div>
-                    <div className="absolute left-[30%] top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-lg border border-copper-orange"></div>
+                  <div className="flex flex-col gap-2 mt-2">
+                    <input 
+                      type="number" 
+                      className="glass-input font-mono text-sm w-full bg-white/5" 
+                      placeholder="0.00"
+                      step="0.1"
+                      min="0"
+                      value={snipeAmount}
+                      onChange={(e) => setSnipeAmount(e.target.value)}
+                    />
+                    <input 
+                      type="range" 
+                      min="0.1" 
+                      max="10" 
+                      step="0.1" 
+                      value={snipeAmount}
+                      onChange={(e) => setSnipeAmount(e.target.value)}
+                      className="w-full h-2 bg-black/50 rounded-full appearance-none cursor-pointer accent-copper-orange"
+                    />
                   </div>
                 </div>
 
@@ -94,8 +118,8 @@ export default function Dashboard() {
                 </button>
               </div>
               
-              <div className="flex-1 p-6 overflow-y-auto">
-                <table className="w-full text-left border-collapse">
+              <div className="flex-1 p-6 overflow-y-auto overflow-x-auto">
+                <table className="w-full text-left border-collapse min-w-[500px]">
                   <thead>
                     <tr>
                       <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5">Action</th>

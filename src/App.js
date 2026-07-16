@@ -7,27 +7,31 @@ import GlassNav from './components/GlassNav';
 import { Toaster } from 'react-hot-toast';
 import './App.css';
 
+import { WalletContextProvider } from './components/WalletContextProvider';
+
 function App() {
   return (
-    <Router>
-      <Toaster 
-        position="top-center" 
-        toastOptions={{
-          style: {
-            background: '#18181b',
-            color: '#fff',
-            border: '1px solid rgba(255,255,255,0.1)',
-            borderRadius: '12px',
-          },
-        }}
-      />
-      <AmbientBackground />
-      <GlassNav />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-    </Router>
+    <WalletContextProvider>
+      <Router>
+        <Toaster 
+          position="top-center" 
+          toastOptions={{
+            style: {
+              background: '#18181b',
+              color: '#fff',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: '12px',
+            },
+          }}
+        />
+        <AmbientBackground />
+        <GlassNav />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </Router>
+    </WalletContextProvider>
   );
 }
 

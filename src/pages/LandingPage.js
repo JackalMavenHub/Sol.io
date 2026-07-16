@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, MessageCircle, Key, ShieldCheck } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { useWallet } from '@solana/wallet-adapter-react';
 import InteractiveCard from '../components/InteractiveCard';
-import { WalletProviderComponent } from '../components/WalletProviderComponent';
+import { PaymentButton } from '../components/PaymentButton';
 import logo from '../logo-rug.png';
 
 export default function LandingPage() {
@@ -14,6 +15,7 @@ export default function LandingPage() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [transactionCompleted, setTransactionCompleted] = useState(false);
   const navigate = useNavigate();
+  const { connected } = useWallet();
 
   // Validate form and button state
   useEffect(() => {
@@ -139,19 +141,27 @@ export default function LandingPage() {
             </div>
 
             <div className="mt-4 pt-4 border-t border-white/5">
-              <WalletProviderComponent 
-                updateButtonState={setTransactionCompleted} 
-                priceInSOL={getPriceInSOL()}
-              />
+              {!connected ? (
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center text-sm text-white/70">
+                  Please connect your wallet using the top navigation bar to proceed.
+                </div>
+              ) : (
+                <PaymentButton 
+                  updateButtonState={setTransactionCompleted} 
+                  priceInSOL={getPriceInSOL()}
+                  disabled={!email || !telegramName || !subscription || errors.email || errors.telegram}
+                />
+              )}
             </div>
 
+            {/* Visual Proceed Button - enabled after transaction completes */}
             <button
               type="submit"
               disabled={isButtonDisabled}
               className={`glass-btn py-4 mt-2 ${!isButtonDisabled ? 'hover:scale-[1.02] active:scale-98 transition-all duration-300' : ''} ${isButtonDisabled ? 'bg-white/5 text-white/30 cursor-not-allowed border border-white/5' : 'glass-btn-primary'}`}
             >
               <ShieldCheck size={18} className="mr-2" /> 
-              Authenticate & Deploy
+              {transactionCompleted ? 'Enter Dashboard' : 'Complete Payment to Proceed'}
             </button>
           </form>
         </InteractiveCard>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import logo from '../logo-rug.png';
 
 export default function GlassNav() {
@@ -44,16 +45,10 @@ export default function GlassNav() {
           })}
         </div>
 
-        {/* CTA Button */}
-        <button 
-          className="relative px-6 py-2 text-sm font-bold text-white bg-black/40 rounded-full border border-transparent overflow-hidden group hover:scale-105 active:scale-95 transition-all duration-300"
-        >
-          {/* Shifting Gradient Border simulation */}
-          <div className="absolute inset-0 bg-gradient-to-r from-copper-orange via-solar-amber to-cosmic-blue opacity-50 group-hover:opacity-100 transition-opacity duration-500 rounded-full" style={{ padding: '1px' }}>
-            <div className="w-full h-full bg-black/60 rounded-full"></div>
-          </div>
-          <span className="relative z-10">Connect Wallet</span>
-        </button>
+        {/* CTA Button / Wallet */}
+        <div className="flex items-center">
+          <WalletMultiButton className="!bg-black/40 !rounded-full !border !border-white/10 hover:!bg-white/10 transition-colors !py-2 !px-6 !text-sm !font-bold" />
+        </div>
       </div>
     </nav>
   );
