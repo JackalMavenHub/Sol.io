@@ -109,7 +109,13 @@ export default function SniperPage() {
             <div className="form-group">
               <span className="label-text flex items-center gap-2"><Settings2 size={14} /> Execution Settings</span>
               <div className="mt-2 flex flex-col gap-3">
-                <label className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                <label 
+                  className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setAntiMev(!antiMev);
+                  }}
+                >
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-6 rounded-full p-1 transition-colors ${antiMev ? 'bg-copper-orange' : 'bg-black/50'}`}>
                       <div className={`w-4 h-4 rounded-full bg-white transition-transform ${antiMev ? 'translate-x-4' : 'translate-x-0'}`} />
