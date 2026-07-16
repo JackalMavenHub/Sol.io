@@ -5,9 +5,10 @@ interface InteractiveCardProps {
   children: React.ReactNode;
   className?: string;
   delay?: number;
+  disableEntryAnimation?: boolean;
 }
 
-export default function InteractiveCard({ children, className = '', delay = 0 }: InteractiveCardProps) {
+export default function InteractiveCard({ children, className = '', delay = 0, disableEntryAnimation = false }: InteractiveCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   
   // Motion values for tilt
@@ -48,8 +49,8 @@ export default function InteractiveCard({ children, className = '', delay = 0 }:
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={disableEntryAnimation ? false : { opacity: 0, y: 30 }}
+      animate={disableEntryAnimation ? false : { opacity: 1, y: 0 }}
       transition={{ 
         type: "spring", 
         stiffness: 300, 

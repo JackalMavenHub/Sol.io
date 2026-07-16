@@ -69,23 +69,10 @@ export default function LandingPage() {
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 px-4 z-10">
       
-      {/* Container for stagger children animations */}
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={{
-          visible: { transition: { staggerChildren: 0.15 } }
-        }}
-        className="w-full max-w-lg flex flex-col items-center"
-      >
-        <InteractiveCard className="w-full relative">
-          <motion.div 
-            variants={{
-              hidden: { opacity: 0, scale: 0.8 },
-              visible: { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 200 } }
-            }}
-            className="flex flex-col items-center mb-8"
-          >
+      {/* Container without stagger animations */}
+      <div className="w-full max-w-lg flex flex-col items-center">
+        <InteractiveCard className="w-full relative" disableEntryAnimation={true}>
+          <div className="flex flex-col items-center mb-8">
             <div className="relative mb-6">
               <div className="absolute inset-0 bg-copper-orange/30 blur-2xl rounded-full" />
               <img src={logo} alt="Logo" className="w-20 h-20 relative z-10 rounded-2xl shadow-2xl border border-white/10" />
@@ -96,13 +83,9 @@ export default function LandingPage() {
             <p className="text-white/50 text-sm text-center max-w-sm">
               Securely register and authenticate via Solana. Access the most powerful mempool sniper interface.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.form 
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 }
-            }}
+          <form 
             className="flex flex-col gap-5 w-full" 
             onSubmit={handleSubmit}
           >
@@ -173,9 +156,9 @@ export default function LandingPage() {
               <ShieldCheck size={18} className="mr-2" /> 
               Authenticate & Deploy
             </motion.button>
-          </motion.form>
+          </form>
         </InteractiveCard>
-      </motion.div>
+      </div>
     </div>
   );
 }
