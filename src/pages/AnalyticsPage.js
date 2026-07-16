@@ -8,6 +8,7 @@ const TOKEN_ADDRESSES = "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm,DezXAZ8z7P
 
 export default function AnalyticsPage() {
   const [tokens, setTokens] = useState([]);
+  const [stats, setStats] = useState({ volume: '$0.0M', pools: '0' });
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(null);
 
@@ -34,19 +35,29 @@ export default function AnalyticsPage() {
           }
         });
 
+        let totalVolume = 0;
+
         const formattedTokens = Array.from(uniqueTokensMap.values())
           .sort((a, b) => (b.volume?.h24 || 0) - (a.volume?.h24 || 0))
-          .map((pair, index) => ({
-            rank: index + 1,
-            symbol: pair.baseToken.symbol,
-            price: `$${parseFloat(pair.priceUsd).toPrecision(4)}`,
-            volume: `$${((pair.volume?.h24 || 0) / 1000000).toFixed(1)}M`,
-            change: `${pair.priceChange?.h24 >= 0 ? '+' : ''}${pair.priceChange?.h24 || 0}%`,
-            isUp: pair.priceChange?.h24 >= 0,
-            liquidity: `$${((pair.liquidity?.usd || 0) / 1000000).toFixed(1)}M`
-          }));
+          .map((pair, index) => {
+            const vol = pair.volume?.h24 || 0;
+            totalVolume += vol;
+            return {
+              rank: index + 1,
+              symbol: pair.baseToken.symbol,
+              price: `$${parseFloat(pair.priceUsd).toPrecision(4)}`,
+              volume: `$${(vol / 1000000).toFixed(1)}M`,
+              change: `${pair.priceChange?.h24 >= 0 ? '+' : ''}${pair.priceChange?.h24 || 0}%`,
+              isUp: pair.priceChange?.h24 >= 0,
+              liquidity: `$${((pair.liquidity?.usd || 0) / 1000000).toFixed(1)}M`
+            };
+          });
           
         setTokens(formattedTokens);
+        setStats({
+          volume: `$${(totalVolume / 1000000).toFixed(1)}M`,
+          pools: uniqueTokensMap.size.toString()
+        });
         setLastUpdated(new Date());
       }
     } catch (error) {
@@ -90,9 +101,9 @@ export default function AnalyticsPage() {
       {/* Top Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <InteractiveCard className="flex flex-col justify-center">
-          <span className="label-text flex items-center gap-2">24h Network Volume</span>
-          <div className="text-3xl font-bold tracking-tight text-white mt-1">$4.2B</div>
-          <div className="text-sm text-copper-orange mt-2 flex items-center gap-1"><ArrowUpRight size={14}/> +18.4%</div>
+          <span className="label-text flex items-center gap-2">24h Tracked Volume</span>
+          <div className="text-3xl font-bold tracking-tight text-white mt-1">{isLoading ? '...' : stats.volume}</div>
+          <div className="text-sm text-copper-orange mt-2 flex items-center gap-1"><ArrowUpRight size={14}/> Top {stats.pools} pools</div>
         </InteractiveCard>
         
         <InteractiveCard className="flex flex-col justify-center">
@@ -102,9 +113,9 @@ export default function AnalyticsPage() {
         </InteractiveCard>
 
         <InteractiveCard className="flex flex-col justify-center">
-          <span className="label-text flex items-center gap-2">Active Snipe Pools</span>
-          <div className="text-3xl font-bold tracking-tight text-white mt-1">1,402</div>
-          <div className="text-sm text-solar-amber mt-2 flex items-center gap-1"><TrendingUp size={14}/> 142 added today</div>
+          <span className="label-text flex items-center gap-2">Tracked Pools</span>
+          <div className="text-3xl font-bold tracking-tight text-white mt-1">{isLoading ? '...' : stats.pools}</div>
+          <div className="text-sm text-solar-amber mt-2 flex items-center gap-1"><TrendingUp size={14}/> Active monitoring</div>
         </InteractiveCard>
       </div>
 
@@ -115,7 +126,7 @@ export default function AnalyticsPage() {
         <div className="lg:col-span-2">
           <InteractiveCard className="h-full min-h-[400px] flex flex-col p-6">
             <h2 className="text-lg font-bold mb-6 flex items-center gap-2">Volume Trend (7D)</h2>
-            <div className="flex-1 border border-white/5 rounded-xl bg-white/[0.02] flex items-end p-4 gap-2">
+            <div className="flex-1 border border-white/5 rounded-xl bg-white/[0.02] flex items-end p-4 gap-2 min-h-[200px]">
               {/* Mock Bar Chart */}
               {[40, 65, 45, 80, 55, 90, 75].map((height, i) => (
                 <div key={i} className="flex-1 flex flex-col justify-end group cursor-pointer relative h-full">
