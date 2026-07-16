@@ -152,7 +152,7 @@ export default function LandingPage() {
             >
               <ShieldCheck size={18} className="mr-2" /> 
               Authenticate & Deploy
-            </motion.button>
+            </button>
           </form>
         </InteractiveCard>
       </div>
