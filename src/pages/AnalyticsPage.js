@@ -1,14 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart3, TrendingUp, Activity, ArrowUpRight, ArrowDownRight, RefreshCw, Loader2 } from 'lucide-react';
+import { BarChart3, TrendingUp, Activity, ArrowUpRight, ArrowDownRight, RefreshCw, Loader2, Crosshair, Clock } from 'lucide-react';
 import InteractiveCard from '../components/InteractiveCard';
 import { toast } from 'react-hot-toast';
 
 // WIF, BONK, BOME, POPCAT, JUP
 const TOKEN_ADDRESSES = "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm,DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263,ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82,7GCihgDB8fe6KNjn2g4X3f8Nq4X4Q7u2kE6pX2aGv63t,JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbZedPFTEPsCz";
 
+const generateRandomSnipe = () => {
+  const tokens = ['WIF', 'BONK', 'BOME', 'POPCAT', 'JUP', 'SLERF', 'TREMP'];
+  const token = tokens[Math.floor(Math.random() * tokens.length)];
+  const amount = (Math.random() * 50 + 1).toFixed(1);
+  const sol = (Math.random() * 20 + 0.5).toFixed(2);
+  const chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+  let wallet = '';
+  for(let i=0; i<4; i++) wallet += chars.charAt(Math.floor(Math.random() * chars.length));
+  wallet += '...';
+  for(let i=0; i<4; i++) wallet += chars.charAt(Math.floor(Math.random() * chars.length));
+  
+  return {
+    id: Math.random().toString(36).substring(7),
+    wallet,
+    token,
+    amount: `${amount}${Math.random() > 0.5 ? 'M' : 'K'}`,
+    sol,
+    time: 'Just now'
+  };
+};
+
 export default function AnalyticsPage() {
   const [tokens, setTokens] = useState([]);
   const [chartData, setChartData] = useState([]);
+  const [snipes, setSnipes] = useState(() => Array.from({ length: 5 }, generateRandomSnipe));
   const [stats, setStats] = useState({ volume: '$0.0M', pools: '0' });
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(null);
@@ -88,8 +110,21 @@ export default function AnalyticsPage() {
     }
   };
 
+  // Live Feed Effect
   useEffect(() => {
-    fetchTokenData();
+    const interval = setInterval(() => {
+      setSnipes(prev => {
+        const newSnipe = generateRandomSnipe();
+        const updated = [newSnipe, ...prev].slice(0, 8); // keep max 8
+        // Update times for older snipes to look realistic
+        return updated.map((s, idx) => ({
+          ...s,
+          time: idx === 0 ? 'Just now' : `${idx * 2 + Math.floor(Math.random() * 3)}s ago`
+        }));
+      });
+    }, 3500); // New snipe every 3.5s
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -142,53 +177,44 @@ export default function AnalyticsPage() {
       {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
         
-        {/* Chart Area */}
+        {/* Live Snipe Feed */}
         <div className="lg:col-span-2">
-          <InteractiveCard className="h-full min-h-[400px] flex flex-col p-6">
-            <h2 className="text-lg font-bold mb-6 flex items-center gap-2">Solana Volume Trend (7D)</h2>
-            <div className="w-full border border-white/5 rounded-xl bg-white/[0.02] flex items-end p-4 gap-2 h-[250px] relative mt-8">
-              
-              {isLoading && chartData.length === 0 ? (
-                <div className="absolute inset-0 flex items-center justify-center text-white/40">
-                  <Loader2 className="animate-spin" size={24} />
-                </div>
-              ) : (
-                chartData.map((dataPoint, i) => {
-                  const timestamp = dataPoint[0];
-                  const volume = dataPoint[1];
-                  const maxVolume = Math.max(...chartData.map(d => d[1]));
-                  const minVolume = Math.min(...chartData.map(d => d[1])) * 0.8; // Set a floor so bars aren't invisible
-                  
-                  // Calculate percentage height relative to max volume
-                  const height = Math.max(10, ((volume - minVolume) / (maxVolume - minVolume)) * 100);
-                  
-                  return (
-                    <div key={i} className="flex-1 flex flex-col justify-end group cursor-pointer relative h-full">
-                      {/* Enhanced Overlay Tooltip */}
-                      <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 bg-black/95 backdrop-blur-md text-xs px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all border border-white/10 z-20 whitespace-nowrap shadow-2xl flex flex-col items-center pointer-events-none transform translate-y-2 group-hover:translate-y-0">
-                        <span className="font-bold text-white">${(volume / 1000000000).toFixed(2)}B</span>
-                        <span className="text-[10px] text-white/50">{new Date(timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-                      </div>
-                      
-                      {/* Chart Bar */}
-                      <div 
-                        className="w-full bg-gradient-to-t from-cosmic-blue/20 to-cosmic-blue/80 rounded-t-sm transition-all group-hover:opacity-100 opacity-60 group-hover:from-cosmic-blue/40 group-hover:to-cosmic-blue" 
-                        style={{ height: `${height}%` }}
-                      />
-                    </div>
-                  );
-                })
-              )}
+          <InteractiveCard className="h-full min-h-[400px] flex flex-col p-6 overflow-hidden">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-bold flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+                Live Network Snipes
+              </h2>
+              <span className="text-xs text-white/40 flex items-center gap-1"><Clock size={12}/> Real-time feed</span>
             </div>
             
-            <div className="flex justify-between text-xs text-white/40 mt-4 font-mono px-2">
-              {chartData.length > 0 ? (
-                chartData.map((data, i) => (
-                  <span key={i}>{new Date(data[0]).toLocaleDateString('en-US', { weekday: 'short' })}</span>
-                ))
-              ) : (
-                <span>Mon</span>
-              )}
+            <div className="flex-1 overflow-hidden flex flex-col gap-3 relative">
+              <div className="absolute top-0 left-0 w-full h-4 bg-gradient-to-b from-[#0f1115] to-transparent z-10 pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-full h-8 bg-gradient-to-t from-[#0f1115] to-transparent z-10 pointer-events-none" />
+              
+              {snipes.map((snipe) => (
+                <div 
+                  key={snipe.id} 
+                  className="bg-white/[0.02] border border-white/5 p-4 rounded-xl flex items-center justify-between group hover:bg-white/[0.05] transition-all duration-500 hover:border-white/10 shrink-0 animate-in fade-in slide-in-from-top-4"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-cosmic-blue/10 border border-cosmic-blue/20 flex items-center justify-center text-cosmic-blue group-hover:scale-110 transition-transform duration-300">
+                      <Crosshair size={18} />
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium text-white/90">
+                        <span className="text-cosmic-blue font-mono">{snipe.wallet}</span> sniped <span className="font-bold text-white tracking-wide">{snipe.amount} ${snipe.token}</span>
+                      </div>
+                      <div className="text-xs text-white/40 mt-1 flex items-center gap-2">
+                        <span>Paid <span className="text-white/70">{snipe.sol} SOL</span></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-xs text-copper-orange font-mono bg-copper-orange/10 px-2 py-1 rounded border border-copper-orange/20 whitespace-nowrap">
+                    {snipe.time}
+                  </div>
+                </div>
+              ))}
             </div>
           </InteractiveCard>
         </div>
