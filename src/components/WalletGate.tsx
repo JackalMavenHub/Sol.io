@@ -2,7 +2,11 @@ import React from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { ShieldAlert } from 'lucide-react';
 
-export default function WalletGate({ children }) {
+interface WalletGateProps {
+  children: React.ReactNode;
+}
+
+export default function WalletGate({ children }: WalletGateProps) {
   const { connected } = useWallet();
 
   if (!connected) {
