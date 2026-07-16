@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 interface InteractiveCardProps {
   children: React.ReactNode;
@@ -7,18 +8,18 @@ interface InteractiveCardProps {
   disableEntryAnimation?: boolean;
 }
 
-export default function InteractiveCard({ children, className = '' }: InteractiveCardProps) {
+export default function InteractiveCard({ children, className = '', delay = 0, disableEntryAnimation = false }: InteractiveCardProps) {
   return (
-    <div
-      className={`glass-panel-2 p-6 transition-all duration-300 hover:border-t-white/20 hover:border-l-white/20 hover:scale-[1.02] ${className}`}
+    <motion.div
+      initial={disableEntryAnimation ? false : { opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ scale: 1.01 }}
+      className={`minimal-panel p-6 ${className}`}
     >
-      {/* Subtle linear gradient glow on hover inside the card */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-      
-      {/* Inner Content */}
       <div className="relative z-10">
         {children}
       </div>
-    </div>
+    </motion.div>
   );
 }

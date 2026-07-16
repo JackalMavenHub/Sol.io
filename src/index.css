@@ -6,8 +6,8 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
   }
   
   html {
@@ -15,39 +15,38 @@
   }
   
   body {
-    @apply bg-space-black text-white min-h-screen overflow-x-hidden;
+    @apply bg-minimal-bg text-white min-h-screen overflow-x-hidden;
     margin: 0;
   }
 }
 
 @layer components {
-  /* Glassmorphism 2.0 Base */
-  .glass-panel-2 {
-    @apply bg-[#0f0f14]/45 backdrop-blur-[24px] rounded-2xl relative overflow-hidden;
-    /* Top/Left strong border, Bottom/Right faint border */
-    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.08),
-                inset -1px -1px 0 rgba(255, 255, 255, 0.02),
-                inset 0 1px 1px rgba(255, 255, 255, 0.05),
-                0 10px 30px rgba(0, 0, 0, 0.5);
+  /* Minimalist 1.0 Base */
+  .minimal-panel {
+    @apply bg-minimal-surface rounded-xl relative overflow-hidden;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   }
   
-  /* Input Fields inside Glass */
-  .glass-input {
-    @apply w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-copper-orange focus:border-copper-orange transition-all duration-300;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+  /* Input Fields */
+  .minimal-input {
+    @apply w-full bg-[#111] border-none rounded-lg px-4 py-3 text-white placeholder-minimal-muted focus:outline-none focus:ring-1 focus:ring-white transition-all duration-300;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   }
   
-  .glass-btn {
-    @apply relative overflow-hidden rounded-xl font-medium tracking-wide flex items-center justify-center transition-all duration-300;
+  .minimal-btn {
+    @apply relative overflow-hidden rounded-lg font-medium tracking-wide flex items-center justify-center transition-all duration-300;
   }
   
-  .glass-btn-primary {
-    @apply bg-gradient-to-r from-copper-orange to-solar-amber text-black font-bold;
-    box-shadow: 0 0 20px rgba(224, 122, 95, 0.4), inset 0 1px 1px rgba(255,255,255,0.4);
+  .minimal-btn-primary {
+    @apply bg-white text-black font-semibold hover:bg-neutral-200;
+  }
+  
+  .minimal-btn-secondary {
+    @apply bg-transparent text-white border border-white/20 hover:bg-white/5;
   }
   
   /* Text styles */
   .label-text {
-    @apply text-xs font-semibold tracking-wider uppercase text-white/60 mb-2 block;
+    @apply text-xs font-medium tracking-wider text-minimal-muted mb-2 block uppercase;
   }
 }

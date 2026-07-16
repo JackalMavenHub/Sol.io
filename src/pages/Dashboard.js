@@ -23,25 +23,25 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <InteractiveCard className="h-full flex flex-col justify-center">
-              <span className="label-text flex items-center gap-2"><Activity size={14} className="text-copper-orange"/> Total PnL</span>
-              <div className="text-4xl font-bold tracking-tight text-white mt-1">+42.50 <span className="text-xl text-white/50">SOL</span></div>
-              <div className="text-sm text-copper-orange mt-2">+12% this week</div>
+              <span className="label-text flex items-center gap-2"><Activity size={14} className="text-white"/> Total PnL</span>
+              <div className="text-4xl font-bold tracking-tight text-white mt-1">+42.50 <span className="text-xl text-minimal-muted">SOL</span></div>
+              <div className="text-sm text-minimal-muted mt-2">+12% this week</div>
             </InteractiveCard>
           </div>
 
           <div>
             <InteractiveCard className="h-full flex flex-col justify-center">
-              <span className="label-text flex items-center gap-2"><Zap size={14} className="text-solar-amber"/> Active Snipes</span>
-              <div className="text-4xl font-bold tracking-tight text-white mt-1">3 <span className="text-xl text-white/50">Bots</span></div>
-              <div className="text-sm text-solar-amber mt-2">Monitoring 4 liquidity pools</div>
+              <span className="label-text flex items-center gap-2"><Zap size={14} className="text-white"/> Active Snipes</span>
+              <div className="text-4xl font-bold tracking-tight text-white mt-1">3 <span className="text-xl text-minimal-muted">Bots</span></div>
+              <div className="text-sm text-minimal-muted mt-2">Monitoring 4 liquidity pools</div>
             </InteractiveCard>
           </div>
 
           <div>
             <InteractiveCard className="h-full flex flex-col justify-center">
-              <span className="label-text flex items-center gap-2"><Shield size={14} className="text-cosmic-blue"/> Win Rate</span>
-              <div className="text-4xl font-bold tracking-tight text-white mt-1">84.2 <span className="text-xl text-white/50">%</span></div>
-              <div className="text-sm text-cosmic-blue mt-2">Across 142 total trades</div>
+              <span className="label-text flex items-center gap-2"><Shield size={14} className="text-white"/> Win Rate</span>
+              <div className="text-4xl font-bold tracking-tight text-white mt-1">84.2 <span className="text-xl text-minimal-muted">%</span></div>
+              <div className="text-sm text-minimal-muted mt-2">Across 142 total trades</div>
             </InteractiveCard>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function Dashboard() {
                     type="text" 
                     id="targetAddress"
                     name="targetAddress"
-                    className="glass-input font-mono text-sm" 
+                    className="minimal-input font-mono text-sm" 
                     placeholder="Paste Solana address..." 
                     value={targetAddress}
                     onChange={(e) => setTargetAddress(e.target.value)}
@@ -80,7 +80,7 @@ export default function Dashboard() {
                       type="number" 
                       id="snipeAmountNumber"
                       name="snipeAmountNumber"
-                      className="glass-input font-mono text-sm w-full bg-white/5" 
+                      className="minimal-input font-mono text-sm w-full bg-black" 
                       placeholder="0.00"
                       step="0.1"
                       min="0"
@@ -96,16 +96,16 @@ export default function Dashboard() {
                       step="0.1" 
                       value={snipeAmount}
                       onChange={(e) => setSnipeAmount(e.target.value)}
-                      className="w-full h-2 bg-black/50 rounded-full appearance-none cursor-pointer accent-copper-orange"
+                      className="w-full h-1 bg-neutral-800 rounded-full appearance-none cursor-pointer accent-white mt-2"
                     />
                   </div>
                 </div>
 
                 <div className="flex gap-3 mt-4">
-                  <button className="glass-btn glass-btn-primary flex-1 py-3 hover:scale-[1.02] active:scale-95 transition-all duration-300">
+                  <button className="minimal-btn minimal-btn-primary flex-1 py-3">
                     Snipe Now
                   </button>
-                  <button className="glass-btn bg-white/5 border border-white/10 hover:bg-white/10 flex-1 py-3 text-white/80 hover:scale-[1.02] active:scale-95 transition-all duration-300">
+                  <button className="minimal-btn minimal-btn-secondary flex-1 py-3">
                     Queue
                   </button>
                 </div>
@@ -116,12 +116,12 @@ export default function Dashboard() {
           {/* Right: Live Visualization / Telemetry */}
           <div className="lg:col-span-2 flex flex-col">
             <InteractiveCard className="flex-1 overflow-hidden flex flex-col p-0">
-              <div className="p-6 border-b border-white/5 flex justify-between items-center">
+              <div className="p-6 border-b border-minimal-border flex justify-between items-center">
                 <h2 className="text-lg font-bold flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
+                  <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>
                   Live Telemetry
                 </h2>
-                <button className="text-xs font-semibold uppercase tracking-wider text-white/50 hover:text-white transition-colors flex items-center">
+                <button className="text-xs font-semibold uppercase tracking-wider text-minimal-muted hover:text-white transition-colors flex items-center">
                   View All <ChevronRight size={14} />
                 </button>
               </div>
@@ -133,30 +133,30 @@ export default function Dashboard() {
                   <table className="w-full text-left border-collapse">
                     <thead>
                       <tr>
-                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5">Action</th>
-                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5">Token</th>
-                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5">Amount</th>
-                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5 text-right">Time</th>
+                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-minimal-muted border-b border-minimal-border">Action</th>
+                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-minimal-muted border-b border-minimal-border">Token</th>
+                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-minimal-muted border-b border-minimal-border">Amount</th>
+                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-minimal-muted border-b border-minimal-border text-right">Time</th>
                       </tr>
                     </thead>
                     <tbody>
                       {mockData.map((row) => (
                         <tr 
                           key={row.id}
-                          className="group border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors cursor-pointer"
+                          className="group border-b border-minimal-border last:border-0 hover:bg-white/[0.02] transition-colors cursor-pointer"
                         >
                           <td className="py-4">
                             <span className={`text-xs font-bold px-2 py-1 rounded-md border ${
-                              row.action === 'BUY' ? 'bg-copper-orange/10 border-copper-orange/20 text-copper-orange' : 
-                              row.action === 'SELL' ? 'bg-red-500/10 border-red-500/20 text-red-500' : 
-                              'bg-cosmic-blue/10 border-cosmic-blue/20 text-cosmic-blue'
+                              row.action === 'BUY' ? 'bg-white text-black border-white' : 
+                              row.action === 'SELL' ? 'bg-transparent border-white/20 text-white' : 
+                              'bg-neutral-800 border-neutral-700 text-white'
                             }`}>
                               {row.action}
                             </span>
                           </td>
                           <td className="py-4 font-medium">{row.token}</td>
                           <td className="py-4 font-mono text-sm">{row.amount}</td>
-                          <td className="py-4 font-mono text-sm text-right text-white/50">{row.time}</td>
+                          <td className="py-4 font-mono text-sm text-right text-minimal-muted">{row.time}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -166,13 +166,13 @@ export default function Dashboard() {
                 {/* Mobile Card Layout */}
                 <div className="md:hidden flex flex-col gap-4">
                   {mockData.map((row) => (
-                    <div key={row.id} className="p-4 rounded-xl border border-white/10 bg-white/5 flex flex-col gap-2">
+                    <div key={row.id} className="p-4 rounded-xl border border-minimal-border bg-minimal-surface flex flex-col gap-2">
                       <div className="flex justify-between items-center">
-                        <span className={`font-bold text-sm ${row.action === 'BUY' ? 'text-copper-orange' : 'text-cosmic-blue'}`}>{row.action} {row.token}</span>
+                        <span className="font-bold text-sm text-white">{row.action} {row.token}</span>
                         <span className="font-mono text-sm">{row.amount}</span>
                       </div>
                       <div className="flex justify-between items-center text-xs">
-                        <span className="font-mono text-white/60">{row.time}</span>
+                        <span className="font-mono text-minimal-muted">{row.time}</span>
                       </div>
                     </div>
                   ))}

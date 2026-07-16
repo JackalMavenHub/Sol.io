@@ -53,7 +53,7 @@ export default function SniperPage() {
               <div className="flex flex-col gap-3">
                 <input 
                   type="number" 
-                  className="glass-input font-mono text-lg bg-white/5" 
+                  className="minimal-input font-mono text-sm bg-white/5" 
                   step="0.1"
                   min="0.1"
                   value={amount}
@@ -64,7 +64,7 @@ export default function SniperPage() {
                   min="0.1" max="50" step="0.1" 
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="w-full h-2 bg-black/50 rounded-full appearance-none cursor-pointer accent-solar-amber"
+                  className="w-full h-1 bg-neutral-800 rounded-full appearance-none cursor-pointer accent-white mt-2"
                 />
               </div>
             </div>
@@ -139,7 +139,7 @@ export default function SniperPage() {
           </div>
 
           {/* Action Button */}
-          <button type="submit" className="glass-btn glass-btn-primary w-full py-5 text-lg mt-4 hover:scale-[1.01] transition-all">
+          <button type="submit" className="minimal-btn minimal-btn-primary w-full py-4 mt-6">
             Initialize Snipe
           </button>
         </form>

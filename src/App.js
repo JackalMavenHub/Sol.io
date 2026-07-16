@@ -4,7 +4,6 @@ import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import SniperPage from './pages/SniperPage';
 import AnalyticsPage from './pages/AnalyticsPage';
-import AmbientBackground from './components/AmbientBackground';
 import GlassNav from './components/GlassNav';
 import { Toaster } from 'react-hot-toast';
 import './App.css';
@@ -26,7 +25,6 @@ function App() {
             },
           }}
         />
-        <AmbientBackground />
         <GlassNav />
         <Routes>
           <Route path="/" element={<LandingPage />} />

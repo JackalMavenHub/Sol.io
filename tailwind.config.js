@@ -14,10 +14,12 @@ module.exports = {
     },
     extend: {
       colors: {
-        'space-black': '#09090b',
-        'copper-orange': '#E07A5F',
-        'cosmic-blue': '#3A86C8',
-        'solar-amber': '#F4A261',
+        'minimal-bg': '#000000',
+        'minimal-surface': '#0a0a0a',
+        'minimal-surface-hover': '#141414',
+        'minimal-border': '#1f1f1f',
+        'minimal-accent': '#ffffff',
+        'minimal-muted': '#a1a1aa',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

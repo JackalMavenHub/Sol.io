@@ -75,10 +75,9 @@ export default function LandingPage() {
         <InteractiveCard className="w-full relative" disableEntryAnimation={true}>
           <div className="flex flex-col items-center mb-8">
             <div className="relative mb-6">
-              <div className="absolute inset-0 bg-copper-orange/30 blur-2xl rounded-full" />
-              <img src={logo} alt="Logo" className="w-20 h-20 relative z-10 rounded-2xl shadow-2xl border border-white/10" />
+              <img src={logo} alt="Logo" className="w-16 h-16 relative z-10 rounded-2xl shadow-xl border border-white/5" />
             </div>
-            <h1 className="text-3xl font-bold bg-gradient-to-br from-white to-white/60 bg-clip-text text-transparent mb-2 text-center">
+            <h1 className="text-3xl font-bold text-white mb-2 text-center tracking-tight">
               Deploy Your Instance
             </h1>
             <p className="text-white/50 text-sm text-center max-w-sm">
@@ -97,7 +96,7 @@ export default function LandingPage() {
                 <input
                   type="email"
                   name="email"
-                  className={`glass-input pl-12 ${errors.email ? 'border-red-500/50 focus:ring-red-500/50' : ''}`}
+                  className={`minimal-input pl-12 ${errors.email ? 'border-red-500/50 focus:ring-red-500/50' : ''}`}
                   placeholder="admin@sol.io"
                   value={email}
                   onChange={handleInputChange}
@@ -114,7 +113,7 @@ export default function LandingPage() {
                 <input
                   type="text"
                   name="telegram"
-                  className={`glass-input pl-12 ${errors.telegram ? 'border-red-500/50 focus:ring-red-500/50' : ''}`}
+                  className={`minimal-input pl-12 ${errors.telegram ? 'border-red-500/50 focus:ring-red-500/50' : ''}`}
                   placeholder="@username"
                   value={telegramName}
                   onChange={handleInputChange}
@@ -130,7 +129,7 @@ export default function LandingPage() {
                 <Key className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10" size={18} />
                 <select
                   name="subscription"
-                  className="glass-input pl-12 relative z-0"
+                  className="minimal-input pl-12 relative z-0"
                   value={subscription}
                   onChange={handleInputChange}
                   required
@@ -160,7 +159,7 @@ export default function LandingPage() {
             <button
               type="submit"
               disabled={isButtonDisabled}
-              className={`glass-btn py-4 mt-2 ${!isButtonDisabled ? 'hover:scale-[1.02] active:scale-98 transition-all duration-300' : ''} ${isButtonDisabled ? 'bg-white/5 text-white/30 cursor-not-allowed border border-white/5' : 'glass-btn-primary'}`}
+              className={`minimal-btn py-4 mt-2 ${!isButtonDisabled ? 'hover:scale-[1.02] active:scale-98 transition-all duration-300' : ''} ${isButtonDisabled ? 'bg-white/5 text-white/30 cursor-not-allowed border border-white/5' : 'minimal-btn-primary'}`}
             >
               <ShieldCheck size={18} className="mr-2" /> 
               {transactionCompleted ? 'Enter Dashboard' : 'Complete Payment to Proceed'}
