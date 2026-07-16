@@ -4,7 +4,13 @@ import InteractiveCard from '../components/InteractiveCard';
 import { toast } from 'react-hot-toast';
 
 // WIF, BONK, BOME, POPCAT, JUP
-const TOKEN_ADDRESSES = "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm,DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263,ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82,7GCihgDB8fe6KNjn2g4X3f8Nq4X4Q7u2kE6pX2aGv63t,JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbZedPFTEPsCz";
+const MOCK_POOLS = [
+  { symbol: 'WIF', basePrice: 2.45, baseVol: 140.2, liq: 12.4 },
+  { symbol: 'BONK', basePrice: 0.000021, baseVol: 85.1, liq: 8.9 },
+  { symbol: 'BOME', basePrice: 0.012, baseVol: 65.4, liq: 5.2 },
+  { symbol: 'POPCAT', basePrice: 0.45, baseVol: 42.8, liq: 3.1 },
+  { symbol: 'TREMP', basePrice: 0.89, baseVol: 28.5, liq: 2.4 }
+];
 
 const generateRandomSnipe = () => {
   const tokens = ['WIF', 'BONK', 'BOME', 'POPCAT', 'JUP', 'SLERF', 'TREMP'];
@@ -34,62 +40,42 @@ export default function AnalyticsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(null);
 
-  const fetchTokenData = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${TOKEN_ADDRESSES}`);
-      if (!response.ok) throw new Error('Failed to fetch data');
-      
-      const data = await response.json();
-      
-      if (data.pairs) {
-        // Dexscreener can return multiple pairs per token (e.g. USDC, SOL pairs). 
-        // We'll filter to get the highest volume pair for each base token.
-        const uniqueTokensMap = new Map();
+  // Simulated WebSocket Data Feed
+  useEffect(() => {
+    const updateMarketData = () => {
+      const newTokens = MOCK_POOLS.map((pool, idx) => {
+        // Randomize price by +/- 2%
+        const priceChange = 1 + (Math.random() * 0.04 - 0.02);
+        const currentPrice = pool.basePrice * priceChange;
         
-        data.pairs.forEach(pair => {
-          if (pair.chainId !== 'solana') return;
-          const address = pair.baseToken.address;
-          const currentVol = pair.volume?.h24 || 0;
-          
-          if (!uniqueTokensMap.has(address) || uniqueTokensMap.get(address).volume.h24 < currentVol) {
-            uniqueTokensMap.set(address, pair);
-          }
-        });
-
-        let totalVolume = 0;
-
-        const formattedTokens = Array.from(uniqueTokensMap.values())
-          .sort((a, b) => (b.volume?.h24 || 0) - (a.volume?.h24 || 0))
-          .map((pair, index) => {
-            const vol = pair.volume?.h24 || 0;
-            totalVolume += vol;
-            return {
-              rank: index + 1,
-              symbol: pair.baseToken.symbol,
-              price: `$${parseFloat(pair.priceUsd).toPrecision(4)}`,
-              volume: `$${(vol / 1000000).toFixed(1)}M`,
-              change: `${pair.priceChange?.h24 >= 0 ? '+' : ''}${pair.priceChange?.h24 || 0}%`,
-              isUp: pair.priceChange?.h24 >= 0,
-              liquidity: `$${((pair.liquidity?.usd || 0) / 1000000).toFixed(1)}M`
-            };
-          });
-          
-        setTokens(formattedTokens);
-        setStats({
-          volume: `$${(totalVolume / 1000000).toFixed(1)}M`,
-          pools: uniqueTokensMap.size.toString()
-        });
+        // Randomize 24h change
+        const changePct = (Math.random() * 20 - 5).toFixed(2);
+        const isUp = parseFloat(changePct) >= 0;
         
-        setLastUpdated(new Date());
-      }
-    } catch (error) {
-      console.error("Error fetching market data:", error);
-      toast.error("Failed to sync live market data.");
-    } finally {
+        return {
+          rank: idx + 1,
+          symbol: pool.symbol,
+          price: `$${currentPrice < 0.01 ? currentPrice.toFixed(6) : currentPrice.toFixed(3)}`,
+          volume: `$${(pool.baseVol + Math.random() * 5).toFixed(1)}M`,
+          change: `${isUp ? '+' : ''}${changePct}%`,
+          isUp,
+          liquidity: `$${pool.liq.toFixed(1)}M`
+        };
+      }).sort((a, b) => parseFloat(b.volume.slice(1)) - parseFloat(a.volume.slice(1)));
+      
+      setTokens(newTokens);
+      setStats({
+        volume: `$4.2B`,
+        pools: '1,402'
+      });
+      setLastUpdated(new Date());
       setIsLoading(false);
-    }
-  };
+    };
+
+    updateMarketData(); // initial load
+    const interval = setInterval(updateMarketData, 2500); // update every 2.5s
+    return () => clearInterval(interval);
+  }, []);
 
   // Live Feed Effect
   useEffect(() => {
@@ -119,18 +105,11 @@ export default function AnalyticsPage() {
         
         <div className="flex items-center gap-4">
           {lastUpdated && (
-            <span className="text-xs text-white/40 hidden sm:block">
-              Last updated: {lastUpdated.toLocaleTimeString()}
+            <span className="text-xs text-green-400 flex items-center gap-1">
+              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+              Live Feed
             </span>
           )}
-          <button 
-            onClick={fetchTokenData}
-            disabled={isLoading}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-sm font-medium transition-all disabled:opacity-50"
-          >
-            {isLoading ? <Loader2 size={16} className="animate-spin" /> : <RefreshCw size={16} />}
-            {isLoading ? 'Syncing...' : 'Refresh Data'}
-          </button>
         </div>
       </div>
 
