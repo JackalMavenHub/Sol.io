@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { Menu, X } from 'lucide-react';
 import logo from '../logo-rug.png';
 
 export default function GlassNav() {
   const location = useLocation();
   const [hoveredPath, setHoveredPath] = useState(location.pathname);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
     { path: '/', label: 'Overview' },
@@ -46,10 +48,39 @@ export default function GlassNav() {
         </div>
 
         {/* CTA Button / Wallet */}
-        <div className="flex items-center">
+        <div className="hidden md:flex items-center">
           <WalletMultiButton className="!bg-black/40 !rounded-full !border !border-white/10 hover:!bg-white/10 transition-colors !py-2 !px-6 !text-sm !font-bold" />
         </div>
+
+        {/* Mobile Hamburger Button */}
+        <button 
+          className="md:hidden p-2 text-white/70 hover:text-white"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0 mt-2 p-4 bg-black/90 backdrop-blur-xl border-y border-white/10 flex flex-col gap-4">
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                location.pathname === item.path ? 'bg-white/10 text-white' : 'text-white/60 hover:bg-white/5 hover:text-white'
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <div className="pt-4 border-t border-white/10">
+            <WalletMultiButton className="w-full !bg-white/5 !rounded-lg !border !border-white/10 hover:!bg-white/10 transition-colors !py-3 !justify-center !text-sm !font-bold" />
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

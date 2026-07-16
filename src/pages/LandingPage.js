@@ -103,6 +103,7 @@ export default function LandingPage() {
                   onChange={handleInputChange}
                   required
                 />
+                {errors.email && <p className="text-red-500/80 text-xs mt-1 absolute -bottom-5 left-0">Please enter a valid email address.</p>}
               </div>
             </div>
 
@@ -119,6 +120,7 @@ export default function LandingPage() {
                   onChange={handleInputChange}
                   required
                 />
+                {errors.telegram && <p className="text-red-500/80 text-xs mt-1 absolute -bottom-5 left-0">Please enter a valid Telegram handle.</p>}
               </div>
             </div>
 

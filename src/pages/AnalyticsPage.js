@@ -50,12 +50,12 @@ export default function AnalyticsPage() {
             <div className="flex-1 border border-white/5 rounded-xl bg-white/[0.02] flex items-end p-4 gap-2">
               {/* Mock Bar Chart */}
               {[40, 65, 45, 80, 55, 90, 75].map((height, i) => (
-                <div key={i} className="flex-1 flex flex-col justify-end group cursor-pointer relative">
-                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity border border-white/10 pointer-events-none">
-                    ${height}M
+                <div key={i} className="flex-1 flex flex-col justify-end group cursor-pointer relative h-full">
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity border border-white/10 z-20 whitespace-nowrap shadow-xl">
+                    ${height * 5.5}M
                   </div>
                   <div 
-                    className="w-full bg-gradient-to-t from-cosmic-blue/20 to-cosmic-blue/80 rounded-t-sm transition-all group-hover:opacity-80" 
+                    className="w-full bg-gradient-to-t from-cosmic-blue/20 to-cosmic-blue/80 rounded-t-sm transition-all group-hover:opacity-100 opacity-60" 
                     style={{ height: `${height}%` }}
                   />
                 </div>

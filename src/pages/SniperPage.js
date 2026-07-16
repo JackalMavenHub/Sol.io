@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Target, Zap, Settings2, AlertTriangle } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 import InteractiveCard from '../components/InteractiveCard';
+import WalletGate from '../components/WalletGate';
 
 export default function SniperPage() {
   const [targetToken, setTargetToken] = useState('');
@@ -10,7 +12,8 @@ export default function SniperPage() {
   const [antiMev, setAntiMev] = useState(true);
 
   return (
-    <div className="relative min-h-screen pt-28 pb-12 px-6 max-w-4xl mx-auto z-10 text-white flex flex-col gap-8">
+    <WalletGate>
+      <div className="relative min-h-screen pt-28 pb-12 px-6 max-w-4xl mx-auto z-10 text-white flex flex-col gap-8">
       
       {/* Header */}
       <div className="flex flex-col items-center mb-4">
@@ -22,14 +25,21 @@ export default function SniperPage() {
       </div>
 
       <InteractiveCard className="p-8">
-        <form className="flex flex-col gap-8" onSubmit={(e) => e.preventDefault()}>
+        <form className="flex flex-col gap-8" onSubmit={(e) => {
+          e.preventDefault();
+          if (!targetToken || targetToken.trim() === '') {
+            toast.error('Please enter a valid target token address.');
+            return;
+          }
+          toast.success('Snipe initialized successfully.');
+        }}>
           
           {/* Target Token */}
-          <div className="form-group">
+          <div className="form-group relative">
             <span className="label-text text-base">Target Token Address</span>
             <input 
               type="text" 
-              className="glass-input font-mono text-lg py-4" 
+              className={`glass-input font-mono text-lg py-4 ${targetToken === '' ? 'border-white/10' : 'border-copper-orange/50'}`} 
               placeholder="Enter Solana mint address..." 
               value={targetToken}
               onChange={(e) => setTargetToken(e.target.value)}
@@ -71,7 +81,7 @@ export default function SniperPage() {
                     key={val}
                     type="button"
                     onClick={() => setSlippage(val)}
-                    className={`flex-1 py-3 rounded-lg text-sm font-bold border transition-all ${
+                    className={`flex-1 py-3 rounded-lg text-sm font-bold border transition-all whitespace-nowrap ${
                       slippage === val 
                         ? 'bg-copper-orange/20 border-copper-orange text-copper-orange' 
                         : 'bg-white/5 border-white/10 text-white/50 hover:bg-white/10 hover:text-white'
@@ -129,11 +139,12 @@ export default function SniperPage() {
           </div>
 
           {/* Action Button */}
-          <button className="glass-btn glass-btn-primary w-full py-5 text-lg mt-4 hover:scale-[1.01] transition-all">
+          <button type="submit" className="glass-btn glass-btn-primary w-full py-5 text-lg mt-4 hover:scale-[1.01] transition-all">
             Initialize Snipe
           </button>
         </form>
       </InteractiveCard>
     </div>
+    </WalletGate>
   );
 }

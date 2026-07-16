@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Activity, Zap, Shield, ChevronRight } from 'lucide-react';
 import InteractiveCard from '../components/InteractiveCard';
+import WalletGate from '../components/WalletGate';
 
 const mockData = [
   { id: 1, action: 'BUY', token: 'PEPE', amount: '1.5 SOL', time: '10:42:15', status: 'Success' },
@@ -15,7 +16,8 @@ export default function Dashboard() {
   const [snipeAmount, setSnipeAmount] = useState('1.50');
 
   return (
-    <div className="relative min-h-screen pt-28 pb-12 px-6 max-w-7xl mx-auto z-10 text-white">
+    <WalletGate>
+      <div className="relative min-h-screen pt-28 pb-12 px-6 max-w-7xl mx-auto z-10 text-white">
       <div className="w-full flex flex-col gap-6">
         {/* Header / Top Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -124,44 +126,64 @@ export default function Dashboard() {
                 </button>
               </div>
               
-              <div className="flex-1 p-6 overflow-y-auto overflow-x-auto">
-                <table className="w-full text-left border-collapse min-w-[500px]">
-                  <thead>
-                    <tr>
-                      <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5">Action</th>
-                      <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5">Token</th>
-                      <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5">Amount</th>
-                      <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5 text-right">Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {mockData.map((row) => (
-                      <tr 
-                        key={row.id}
-                        className="group border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors cursor-pointer"
-                      >
-                        <td className="py-4">
-                          <span className={`text-xs font-bold px-2 py-1 rounded-md border ${
-                            row.action === 'BUY' ? 'bg-copper-orange/10 border-copper-orange/20 text-copper-orange' : 
-                            row.action === 'SELL' ? 'bg-red-500/10 border-red-500/20 text-red-500' : 
-                            'bg-cosmic-blue/10 border-cosmic-blue/20 text-cosmic-blue'
-                          }`}>
-                            {row.action}
-                          </span>
-                        </td>
-                        <td className="py-4 font-medium">{row.token}</td>
-                        <td className="py-4 font-mono text-sm">{row.amount}</td>
-                        <td className="py-4 font-mono text-sm text-right text-white/50">{row.time}</td>
+              <div className="flex-1 p-6 overflow-y-auto">
+                
+                {/* Desktop Table Layout */}
+                <div className="hidden md:block">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr>
+                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5">Action</th>
+                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5">Token</th>
+                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5">Amount</th>
+                        <th className="pb-4 font-semibold text-xs uppercase tracking-wider text-white/40 border-b border-white/5 text-right">Time</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {mockData.map((row) => (
+                        <tr 
+                          key={row.id}
+                          className="group border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors cursor-pointer"
+                        >
+                          <td className="py-4">
+                            <span className={`text-xs font-bold px-2 py-1 rounded-md border ${
+                              row.action === 'BUY' ? 'bg-copper-orange/10 border-copper-orange/20 text-copper-orange' : 
+                              row.action === 'SELL' ? 'bg-red-500/10 border-red-500/20 text-red-500' : 
+                              'bg-cosmic-blue/10 border-cosmic-blue/20 text-cosmic-blue'
+                            }`}>
+                              {row.action}
+                            </span>
+                          </td>
+                          <td className="py-4 font-medium">{row.token}</td>
+                          <td className="py-4 font-mono text-sm">{row.amount}</td>
+                          <td className="py-4 font-mono text-sm text-right text-white/50">{row.time}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Mobile Card Layout */}
+                <div className="md:hidden flex flex-col gap-4">
+                  {mockData.map((row) => (
+                    <div key={row.id} className="p-4 rounded-xl border border-white/10 bg-white/5 flex flex-col gap-2">
+                      <div className="flex justify-between items-center">
+                        <span className={`font-bold text-sm ${row.action === 'BUY' ? 'text-copper-orange' : 'text-cosmic-blue'}`}>{row.action} {row.token}</span>
+                        <span className="font-mono text-sm">{row.amount}</span>
+                      </div>
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="font-mono text-white/60">{row.time}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
               </div>
             </InteractiveCard>
           </div>
 
         </div>
       </div>
-    </div>
+    </WalletGate>
   );
 }
