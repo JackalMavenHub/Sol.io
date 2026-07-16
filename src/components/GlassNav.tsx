@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../logo-rug.png';
 
@@ -36,34 +35,25 @@ export default function GlassNav() {
                 to={item.path}
                 onMouseEnter={() => setHoveredPath(item.path)}
                 className={`relative px-5 py-2 text-sm font-medium transition-colors z-10 ${
-                  isActive ? 'text-white' : 'text-white/60 hover:text-white/80'
+                  isActive ? 'text-white bg-white/10 rounded-full border border-white/5' : 'text-white/60 hover:text-white/80'
                 }`}
               >
                 {item.label}
-                {isActive && (
-                  <motion.div
-                    layoutId="nav-pill"
-                    className="absolute inset-0 bg-white/10 rounded-full border border-white/5"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
-                )}
               </Link>
             );
           })}
         </div>
 
         {/* CTA Button */}
-        <motion.button 
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="relative px-6 py-2 text-sm font-bold text-white bg-black/40 rounded-full border border-transparent overflow-hidden group"
+        <button 
+          className="relative px-6 py-2 text-sm font-bold text-white bg-black/40 rounded-full border border-transparent overflow-hidden group hover:scale-105 active:scale-95 transition-all duration-300"
         >
           {/* Shifting Gradient Border simulation */}
           <div className="absolute inset-0 bg-gradient-to-r from-copper-orange via-solar-amber to-cosmic-blue opacity-50 group-hover:opacity-100 transition-opacity duration-500 rounded-full" style={{ padding: '1px' }}>
             <div className="w-full h-full bg-black/60 rounded-full"></div>
           </div>
           <span className="relative z-10">Connect Wallet</span>
-        </motion.button>
+        </button>
       </div>
     </nav>
   );

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Mail, MessageCircle, Key, ShieldCheck } from 'lucide-react';
 import { toast } from 'react-hot-toast';
@@ -146,12 +145,10 @@ export default function LandingPage() {
               />
             </div>
 
-            <motion.button
+            <button
               type="submit"
               disabled={isButtonDisabled}
-              whileHover={!isButtonDisabled ? { scale: 1.02 } : {}}
-              whileTap={!isButtonDisabled ? { scale: 0.98 } : {}}
-              className={`glass-btn py-4 mt-2 ${isButtonDisabled ? 'bg-white/5 text-white/30 cursor-not-allowed border border-white/5' : 'glass-btn-primary'}`}
+              className={`glass-btn py-4 mt-2 ${!isButtonDisabled ? 'hover:scale-[1.02] active:scale-98 transition-all duration-300' : ''} ${isButtonDisabled ? 'bg-white/5 text-white/30 cursor-not-allowed border border-white/5' : 'glass-btn-primary'}`}
             >
               <ShieldCheck size={18} className="mr-2" /> 
               Authenticate & Deploy
