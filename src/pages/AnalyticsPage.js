@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart3, TrendingUp, Activity, ArrowUpRight, ArrowDownRight, RefreshCw, Loader2, Crosshair, Clock } from 'lucide-react';
+import { BarChart3, TrendingUp, Activity, ArrowUpRight, ArrowDownRight, Crosshair, Clock } from 'lucide-react';
 import InteractiveCard from '../components/InteractiveCard';
-import { toast } from 'react-hot-toast';
 
 // WIF, BONK, BOME, POPCAT, JUP
 const MOCK_POOLS = [
