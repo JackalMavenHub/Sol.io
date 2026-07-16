@@ -1,82 +1,116 @@
-/* True iOS Glassmorphism Base */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* Premium Web3 Glassmorphism Design System */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 .App {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* iOS abstract fluid wallpaper base */
-  background: 
-    radial-gradient(circle at 15% 50%, rgba(255, 182, 193, 0.6) 0%, transparent 50%),
-    radial-gradient(circle at 85% 30%, rgba(135, 206, 250, 0.7) 0%, transparent 50%),
-    radial-gradient(circle at 50% 80%, rgba(221, 160, 221, 0.5) 0%, transparent 50%);
-  background-color: #f2f2f7;
-  color: #1d1d1f;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #030303;
+  color: var(--text-primary);
+  font-family: 'Outfit', -apple-system, sans-serif;
   padding: 40px 20px;
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Main Container - Frosted Glass */
+/* Dynamic Ambient Background */
+.App::before, .App::after {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: 0;
+  animation: float 20s infinite ease-in-out alternate;
+  opacity: 0.6;
+}
+
+.App::before {
+  background: rgba(20, 241, 149, 0.15); /* Solana Green */
+  top: -100px;
+  left: -100px;
+}
+
+.App::after {
+  background: rgba(153, 69, 255, 0.15); /* Solana Purple */
+  bottom: -100px;
+  right: -100px;
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(50px, 50px) scale(1.1);
+  }
+}
+
+/* Main Glassmorphism Container */
 .App-header {
-  background: rgba(255, 255, 255, 0.65);
-  padding: 2.5rem 2.5rem 3rem 2.5rem;
+  background: rgba(24, 24, 27, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 3rem 2.5rem;
   width: 100%;
   max-width: 480px;
   position: relative;
   z-index: 1;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Logo */
+/* Logo Section */
 .logo-container {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: 20px;
 }
 
 .lottie-container {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
+  filter: drop-shadow(0 0 20px rgba(20, 241, 149, 0.3));
 }
 
 .logo {
-  width: 80px;
+  width: 70px;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Typography */
 h1 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
   font-weight: 600;
-  color: #1d1d1f;
+  color: #ffffff;
   text-align: center;
   letter-spacing: -0.02em;
 }
 
 .description-container {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   text-align: center;
 }
 
 .description-container p {
   margin: 0;
   font-size: 0.95rem;
-  color: #86868b;
+  color: #a1a1aa;
   line-height: 1.6;
-  font-weight: 400;
 }
 
 /* Form Styles */
@@ -91,69 +125,94 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  position: relative;
 }
 
 label {
   font-size: 0.85rem;
   font-weight: 500;
-  color: #86868b;
-  padding-left: 4px;
+  color: #e4e4e7;
+  margin-left: 4px;
 }
 
-/* Flat iOS Inputs */
+/* Inputs */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  color: #71717a;
+  transition: color var(--transition-normal);
+}
+
 input, select {
   width: 100%;
-  padding: 1rem 1.25rem;
-  background: rgba(0, 0, 0, 0.04);
-  border: 1px solid transparent;
-  border-radius: 10px;
-  font-family: 'Inter', sans-serif;
+  padding: 1rem 1rem 1rem 3rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  font-family: 'Outfit', sans-serif;
   font-size: 1rem;
-  color: #1d1d1f;
-  transition: all 0.2s ease;
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
 
 input:focus, select:focus {
   outline: none;
-  background: rgba(0, 0, 0, 0.06);
-  border-color: rgba(0, 122, 255, 0.4);
+  background: rgba(0, 0, 0, 0.5);
+  border-color: rgba(20, 241, 149, 0.5);
+  box-shadow: 0 0 0 1px rgba(20, 241, 149, 0.5), inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:focus + .input-icon, select:focus + .input-icon {
+  color: #14F195;
 }
 
 input::placeholder {
-  color: #86868b;
+  color: #52525b;
 }
 
+/* Select specific styling */
 select {
+  padding-left: 3rem;
   appearance: none;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2386868b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2371717a%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
   background-repeat: no-repeat;
-  background-position: right 1.25rem top 50%;
-  background-size: 0.65rem auto;
+  background-position: right 1rem center;
+  background-size: 1.2rem;
+  cursor: pointer;
 }
 
 option {
-  background: #ffffff;
-  color: #1d1d1f;
+  background: #18181b;
+  color: #ffffff;
 }
 
 /* Validation */
 .input-error {
-  border-color: rgba(255, 59, 48, 0.4) !important;
-  background: rgba(255, 59, 48, 0.05) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.5), inset 0 2px 4px rgba(0,0,0,0.2) !important;
 }
 
 .input-success {
-  border-color: rgba(52, 199, 89, 0.4) !important;
-  background: rgba(52, 199, 89, 0.05) !important;
+  border-color: rgba(20, 241, 149, 0.3) !important;
 }
 
 /* Button Container */
 .wallet-button-container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   width: 100%;
-  margin: 16px 0 8px 0;
+  margin: 16px 0;
 }
 
 /* Buttons */
@@ -161,186 +220,144 @@ option {
 .send-button,
 .submit-button {
   width: 100%;
-  height: 50px;
-  border-radius: 10px;
-  font-family: 'Inter', sans-serif;
+  height: 56px;
+  border-radius: 14px;
+  font-family: 'Outfit', sans-serif;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.05rem;
   border: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Wallet Adapter */
+.wallet-adapter-button:active:not(:disabled),
+.send-button:active:not(:disabled),
+.submit-button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Wallet Adapter specific overrides */
 .wallet-adapter-dropdown {
   width: 100%;
 }
 
 .wallet-adapter-button {
-  background: rgba(0, 0, 0, 0.05) !important;
-  color: #1d1d1f !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-.wallet-adapter-button:hover {
-  background: rgba(0, 0, 0, 0.08) !important;
+.wallet-adapter-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Send Button */
 .send-button {
-  background: #007aff;
-  color: #ffffff;
+  background: rgba(153, 69, 255, 0.1); /* Purple tint */
+  color: #d8b4fe;
+  border: 1px solid rgba(153, 69, 255, 0.3);
 }
 
 .send-button:hover:not(:disabled) {
-  background: #0056b3;
+  background: rgba(153, 69, 255, 0.2);
+  border-color: rgba(153, 69, 255, 0.5);
+  box-shadow: 0 8px 24px rgba(153, 69, 255, 0.2);
 }
 
-/* Submit Button */
+/* Submit Button - Gradient */
 .submit-button {
-  background: #000000;
+  background: linear-gradient(135deg, #14F195 0%, #9945FF 100%);
   color: #ffffff;
+  border: none;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(20, 241, 149, 0.3);
+  margin-top: 8px;
+}
+
+.submit-button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, #9945FF 0%, #14F195 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.submit-button span {
+  position: relative;
+  z-index: 2;
+}
+
+.submit-button:hover:not(:disabled)::before {
+  opacity: 1;
 }
 
 .submit-button:hover:not(:disabled) {
-  background: #333333;
+  box-shadow: 0 12px 32px rgba(153, 69, 255, 0.4);
 }
 
 .submit-button:disabled, .send-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  filter: grayscale(0.5);
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .App-header {
-    padding: 2rem 1.5rem;
-    border-radius: 0;
-    border: none;
-    background: rgba(255, 255, 255, 0.85);
-  }
-}
-
-/* Intro Screen Overlay */
-.intro-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  /* Match the body background so it seamlessly blends */
-  background: #f2f2f7 radial-gradient(circle at 15% 50%, rgba(255, 182, 193, 0.4) 0%, transparent 50%);
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.8s;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-.intro-overlay.fade-out {
-  opacity: 0;
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  pointer-events: none;
-}
-
-.intro-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: float 3s ease-in-out infinite alternate;
-}
-
-@keyframes float {
-  0% { transform: translateY(0px) scale(1); }
-  100% { transform: translateY(-5px) scale(1.02); }
-}
-
-.fade-in-app {
-  animation: appFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes appFadeIn {
-  from { opacity: 0; transform: scale(0.98); filter: blur(5px); }
-  to { opacity: 1; transform: scale(1); filter: blur(0); }
-}
-
-/* Wallet Adapter Modal Overrides for iOS Light Mode */
+/* ====================================================
+   Wallet Adapter Modal Overrides 
+   ==================================================== */
 .wallet-adapter-modal-overlay {
-  background: rgba(0, 0, 0, 0.2) !important;
+  background: rgba(0, 0, 0, 0.6) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
 }
 
 .wallet-adapter-modal-wrapper {
-  background: rgba(255, 255, 255, 0.85) !important;
-  backdrop-filter: blur(40px) !important;
-  -webkit-backdrop-filter: blur(40px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  background: rgba(24, 24, 27, 0.8) !important;
+  backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 24px !important;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
-  font-family: 'Inter', sans-serif !important;
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.8) !important;
+  font-family: 'Outfit', sans-serif !important;
+  padding: 24px !important;
 }
 
 .wallet-adapter-modal-title {
-  color: #1d1d1f !important;
+  color: #ffffff !important;
   font-weight: 600 !important;
-  font-family: 'Inter', sans-serif !important;
+  font-size: 1.3rem !important;
+  padding-bottom: 16px !important;
 }
 
 .wallet-adapter-modal-button-close {
-  background: rgba(0, 0, 0, 0.05) !important;
-  color: #1d1d1f !important;
-  border-radius: 50% !important;
-  transition: background 0.2s ease !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 12px !important;
 }
 
 .wallet-adapter-modal-button-close:hover {
-  background: rgba(0, 0, 0, 0.1) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
 }
 
-.wallet-adapter-modal-button-close svg {
-  fill: #1d1d1f !important;
-}
-
-/* Modal List Buttons (The wallets) */
-.wallet-adapter-modal-list {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.wallet-adapter-modal-list .wallet-adapter-button {
-  background: rgba(0, 0, 0, 0.03) !important;
-  color: #1d1d1f !important;
-  border-radius: 12px !important;
-  border: none !important;
-  font-weight: 500 !important;
-  margin-bottom: 8px !important;
-  transition: background 0.2s ease !important;
-  font-family: 'Inter', sans-serif !important;
-  justify-content: space-between !important;
-}
-
-.wallet-adapter-modal-list .wallet-adapter-button:hover {
-  background: rgba(0, 0, 0, 0.06) !important;
-}
-
-.wallet-adapter-modal-list .wallet-adapter-button span {
-  color: #86868b !important;
-  font-weight: 400 !important;
-}
-
-/* 'More options' button */
-.wallet-adapter-modal-collapse-button {
-  color: #1d1d1f !important;
-  font-weight: 500 !important;
-  margin-top: 10px !important;
-}
-
-.wallet-adapter-modal-collapse-button svg {
-  fill: #1d1d1f !important;
+/* Responsive */
+@media (max-width: 600px) {
+  .App {
+    padding: 20px 16px;
+  }
+  
+  .App-header {
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+  }
+  
+  .App::before, .App::after {
+    width: 400px;
+    height: 400px;
+  }
 }

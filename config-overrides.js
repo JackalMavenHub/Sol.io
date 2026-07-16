@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = function override(config) {
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -8,6 +10,10 @@ module.exports = function override(config) {
       stream: require.resolve("stream-browserify"),
       crypto: require.resolve("crypto-browserify"),
       vm: require.resolve("vm-browserify"),
+    };
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, 'src'),
     };
     return config;
   };

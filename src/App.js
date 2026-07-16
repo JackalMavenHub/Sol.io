@@ -5,32 +5,15 @@ import { WalletProviderComponent } from './components/WalletProviderComponent.ts
 import Lottie from 'lottie-react';
 import blockchainAnimation from './animations/blockchain.json';
 import { Toaster, toast } from 'react-hot-toast';
+import { Mail, MessageCircle, Key, ShieldCheck } from 'lucide-react';
 
 function App() {
-  const [showIntro, setShowIntro] = useState(true);
-  const [fadeIntro, setFadeIntro] = useState(false);
   const [email, setEmail] = useState('');
   const [telegramName, setTelegramName] = useState('');
   const [subscription, setSubscription] = useState('');
   const [errors, setErrors] = useState({});
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [transactionCompleted, setTransactionCompleted] = useState(false);
-
-  // Intro Screen Splash Timer
-  useEffect(() => {
-    const fadeTimer = setTimeout(() => {
-      setFadeIntro(true);
-    }, 2500); // Start fading out after 2.5s
-    
-    const removeTimer = setTimeout(() => {
-      setShowIntro(false);
-    }, 3500); // Completely unmount after 3.5s
-
-    return () => {
-      clearTimeout(fadeTimer);
-      clearTimeout(removeTimer);
-    };
-  }, []);
 
   // Validate form and button state
   useEffect(() => {
@@ -117,21 +100,19 @@ function App() {
   };
 
   return (
-    <>
-      {showIntro && (
-        <div className={`intro-overlay ${fadeIntro ? 'fade-out' : ''}`}>
-          <div className="intro-content">
-            <Lottie
-              animationData={blockchainAnimation}
-              loop={true}
-              autoplay={true}
-              style={{ width: '120px', height: '120px' }}
-            />
-          </div>
-        </div>
-      )}
-      <div className="App fade-in-app">
-      <Toaster position="top-center" />
+    <div className="App">
+      <Toaster 
+        position="top-center" 
+        toastOptions={{
+          style: {
+            background: '#18181b',
+            color: '#fff',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: '12px',
+          },
+        }}
+      />
+      
       <header className="App-header fade-in">
         <div className="logo-container">
           <div className="lottie-container">
@@ -144,51 +125,66 @@ function App() {
           </div>
           <img src={logo} alt="Logo" className="logo" />
         </div>
-        <div className="description-container">
-          <p>Welcome to the Solana MP Rug Tool. Complete your registration by filling out the form below and making a one-time payment. Upon completion, you'll receive instant access to the tool via email, including your unique access key and setup guide.</p>
-        </div>
+        
         <h1>Secure Registration</h1>
+        
+        <div className="description-container">
+          <p>Complete your registration by filling out the form below. Upon completion, you'll receive instant access to the tool via email.</p>
+        </div>
+        
         <form className="signup-form" onSubmit={handleSubmit}>
+          
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className={errors.email ? 'input-error' : (email ? 'input-success' : '')}
-              placeholder="Enter your email"
-              value={email}
-              onChange={handleInputChange}
-              required
-            />
+            <div className="input-wrapper">
+              <Mail className="input-icon" size={18} />
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className={errors.email ? 'input-error' : (email ? 'input-success' : '')}
+                placeholder="Enter your email"
+                value={email}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
           </div>
+          
           <div className="form-group">
             <label htmlFor="telegram">Telegram Handle</label>
-            <input
-              type="text"
-              id="telegram"
-              name="telegram"
-              className={errors.telegram ? 'input-error' : (telegramName ? 'input-success' : '')}
-              placeholder="@username"
-              value={telegramName}
-              onChange={handleInputChange}
-              required
-            />
+            <div className="input-wrapper">
+              <MessageCircle className="input-icon" size={18} />
+              <input
+                type="text"
+                id="telegram"
+                name="telegram"
+                className={errors.telegram ? 'input-error' : (telegramName ? 'input-success' : '')}
+                placeholder="@username"
+                value={telegramName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
           </div>
+          
           <div className="form-group">
             <label htmlFor="subscription">Subscription Tier</label>
-            <select
-              id="subscription"
-              name="subscription"
-              className={subscription ? 'input-success' : ''}
-              value={subscription}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Select an option</option>
-              <option value="1-month">1 Month Subscription (1 SOL)</option>
-              <option value="lifetime">Lifetime Subscription (7 SOL)</option>
-            </select>
+            <div className="input-wrapper">
+              <Key className="input-icon" size={18} />
+              <select
+                id="subscription"
+                name="subscription"
+                className={subscription ? 'input-success' : ''}
+                value={subscription}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Select a tier...</option>
+                <option value="1-month">1 Month Subscription (1 SOL)</option>
+                <option value="lifetime">Lifetime Subscription (7 SOL)</option>
+              </select>
+            </div>
           </div>
           
           <WalletProviderComponent 
@@ -201,12 +197,12 @@ function App() {
             className="submit-button"
             disabled={isButtonDisabled}
           >
-            Complete Registration
+            <span><ShieldCheck size={18} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'text-bottom' }}/> Complete Registration</span>
           </button>
+          
         </form>
       </header>
     </div>
-    </>
   );
 }
 
