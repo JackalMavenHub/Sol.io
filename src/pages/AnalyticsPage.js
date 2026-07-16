@@ -146,7 +146,7 @@ export default function AnalyticsPage() {
         <div className="lg:col-span-2">
           <InteractiveCard className="h-full min-h-[400px] flex flex-col p-6">
             <h2 className="text-lg font-bold mb-6 flex items-center gap-2">Solana Volume Trend (7D)</h2>
-            <div className="flex-1 border border-white/5 rounded-xl bg-white/[0.02] flex items-end p-4 gap-2 min-h-[200px] relative mt-8">
+            <div className="w-full border border-white/5 rounded-xl bg-white/[0.02] flex items-end p-4 gap-2 h-[250px] relative mt-8">
               
               {isLoading && chartData.length === 0 ? (
                 <div className="absolute inset-0 flex items-center justify-center text-white/40">
