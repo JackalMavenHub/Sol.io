@@ -97,7 +97,7 @@ export default function LandingPage() {
                 <input
                   type="email"
                   name="email"
-                  className={`glass-input ${errors.email ? 'border-red-500/50 focus:ring-red-500/50' : ''}`}
+                  className={`glass-input pl-12 ${errors.email ? 'border-red-500/50 focus:ring-red-500/50' : ''}`}
                   placeholder="admin@sol.io"
                   value={email}
                   onChange={handleInputChange}
@@ -113,7 +113,7 @@ export default function LandingPage() {
                 <input
                   type="text"
                   name="telegram"
-                  className={`glass-input ${errors.telegram ? 'border-red-500/50 focus:ring-red-500/50' : ''}`}
+                  className={`glass-input pl-12 ${errors.telegram ? 'border-red-500/50 focus:ring-red-500/50' : ''}`}
                   placeholder="@username"
                   value={telegramName}
                   onChange={handleInputChange}
@@ -128,7 +128,7 @@ export default function LandingPage() {
                 <Key className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10" size={18} />
                 <select
                   name="subscription"
-                  className="glass-input relative z-0"
+                  className="glass-input pl-12 relative z-0"
                   value={subscription}
                   onChange={handleInputChange}
                   required
