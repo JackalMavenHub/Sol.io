@@ -22,7 +22,12 @@ require('@solana/wallet-adapter-react-ui/styles.css');
 
 const RECEIVER_WALLET_ADDRESS = "DQj1xHy2qq5g1mbf7aHnhKovHgfL5jwLmPYu68ULpKA7";
 
-const SendButton = ({ updateButtonState, priceInSOL }) => {
+interface WalletProps {
+    updateButtonState: (completed: boolean) => void;
+    priceInSOL: number;
+}
+
+const SendButton = ({ updateButtonState, priceInSOL }: WalletProps) => {
     const { publicKey, sendTransaction } = useWallet();
     const [isProcessing, setIsProcessing] = useState(false);
 
@@ -107,7 +112,7 @@ const SendButton = ({ updateButtonState, priceInSOL }) => {
 };
 
 
-export const WalletProviderComponent = ({ updateButtonState, priceInSOL }) => {
+export const WalletProviderComponent = ({ updateButtonState, priceInSOL }: WalletProps) => {
     const network = WalletAdapterNetwork.Mainnet;
     const endpoint = useMemo(() => clusterApiUrl(network), [network]);
     console.log('Connection Endpoint:', endpoint);
