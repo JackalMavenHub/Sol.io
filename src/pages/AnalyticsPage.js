@@ -8,6 +8,7 @@ const TOKEN_ADDRESSES = "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm,DezXAZ8z7P
 
 export default function AnalyticsPage() {
   const [tokens, setTokens] = useState([]);
+  const [chartData, setChartData] = useState([]);
   const [stats, setStats] = useState({ volume: '$0.0M', pools: '0' });
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(null);
@@ -58,6 +59,22 @@ export default function AnalyticsPage() {
           volume: `$${(totalVolume / 1000000).toFixed(1)}M`,
           pools: uniqueTokensMap.size.toString()
         });
+        
+        // Fetch CoinGecko Chart Data
+        try {
+          const cgResponse = await fetch('https://api.coingecko.com/api/v3/coins/solana/market_chart?vs_currency=usd&days=7&interval=daily');
+          if (cgResponse.ok) {
+            const cgData = await cgResponse.json();
+            if (cgData.total_volumes && cgData.total_volumes.length > 0) {
+              // Take the last 7 items (days)
+              const last7Days = cgData.total_volumes.slice(-7);
+              setChartData(last7Days);
+            }
+          }
+        } catch (cgError) {
+          console.error("CoinGecko fetch failed:", cgError);
+        }
+
         setLastUpdated(new Date());
       }
     } catch (error) {
@@ -125,23 +142,50 @@ export default function AnalyticsPage() {
         {/* Chart Area */}
         <div className="lg:col-span-2">
           <InteractiveCard className="h-full min-h-[400px] flex flex-col p-6">
-            <h2 className="text-lg font-bold mb-6 flex items-center gap-2">Volume Trend (7D)</h2>
-            <div className="flex-1 border border-white/5 rounded-xl bg-white/[0.02] flex items-end p-4 gap-2 min-h-[200px]">
-              {/* Mock Bar Chart */}
-              {[40, 65, 45, 80, 55, 90, 75].map((height, i) => (
-                <div key={i} className="flex-1 flex flex-col justify-end group cursor-pointer relative h-full">
-                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity border border-white/10 z-20 whitespace-nowrap shadow-xl">
-                    ${height * 5.5}M
-                  </div>
-                  <div 
-                    className="w-full bg-gradient-to-t from-cosmic-blue/20 to-cosmic-blue/80 rounded-t-sm transition-all group-hover:opacity-100 opacity-60" 
-                    style={{ height: `${height}%` }}
-                  />
+            <h2 className="text-lg font-bold mb-6 flex items-center gap-2">Solana Volume Trend (7D)</h2>
+            <div className="flex-1 border border-white/5 rounded-xl bg-white/[0.02] flex items-end p-4 gap-2 min-h-[200px] relative mt-8">
+              
+              {isLoading && chartData.length === 0 ? (
+                <div className="absolute inset-0 flex items-center justify-center text-white/40">
+                  <Loader2 className="animate-spin" size={24} />
                 </div>
-              ))}
+              ) : (
+                chartData.map((dataPoint, i) => {
+                  const timestamp = dataPoint[0];
+                  const volume = dataPoint[1];
+                  const maxVolume = Math.max(...chartData.map(d => d[1]));
+                  const minVolume = Math.min(...chartData.map(d => d[1])) * 0.8; // Set a floor so bars aren't invisible
+                  
+                  // Calculate percentage height relative to max volume
+                  const height = Math.max(10, ((volume - minVolume) / (maxVolume - minVolume)) * 100);
+                  
+                  return (
+                    <div key={i} className="flex-1 flex flex-col justify-end group cursor-pointer relative h-full">
+                      {/* Enhanced Overlay Tooltip */}
+                      <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 bg-black/95 backdrop-blur-md text-xs px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all border border-white/10 z-20 whitespace-nowrap shadow-2xl flex flex-col items-center pointer-events-none transform translate-y-2 group-hover:translate-y-0">
+                        <span className="font-bold text-white">${(volume / 1000000000).toFixed(2)}B</span>
+                        <span className="text-[10px] text-white/50">{new Date(timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                      </div>
+                      
+                      {/* Chart Bar */}
+                      <div 
+                        className="w-full bg-gradient-to-t from-cosmic-blue/20 to-cosmic-blue/80 rounded-t-sm transition-all group-hover:opacity-100 opacity-60 group-hover:from-cosmic-blue/40 group-hover:to-cosmic-blue" 
+                        style={{ height: `${height}%` }}
+                      />
+                    </div>
+                  );
+                })
+              )}
             </div>
-            <div className="flex justify-between text-xs text-white/40 mt-4 font-mono">
-              <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+            
+            <div className="flex justify-between text-xs text-white/40 mt-4 font-mono px-2">
+              {chartData.length > 0 ? (
+                chartData.map((data, i) => (
+                  <span key={i}>{new Date(data[0]).toLocaleDateString('en-US', { weekday: 'short' })}</span>
+                ))
+              ) : (
+                <span>Mon</span>
+              )}
             </div>
           </InteractiveCard>
         </div>
